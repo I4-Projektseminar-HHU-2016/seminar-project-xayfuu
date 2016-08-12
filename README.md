@@ -1,4 +1,4 @@
-# Project Title
+# Bromi 
 
 One Paragraph of project description goes here
 
@@ -42,13 +42,11 @@ until finished
 
 ## Authors
 
-* **Tina Test** - [HHU-test](https://github.com/HHU-test)
+* **Marco Kluin** - [HHU-test](https://github.com/HHU-test)
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
-
-*Check http://choosealicense.com/ to choose a license for your code*
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
