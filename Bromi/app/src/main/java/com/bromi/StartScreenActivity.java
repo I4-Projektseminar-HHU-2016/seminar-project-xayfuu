@@ -15,7 +15,7 @@ public class StartScreenActivity extends AppCompatActivity {
 
     // Called when clicked on "Create Profile" button
     public void buttonCreateProfile(View view) {
-        Intent createProfile = new Intent(this, CreateProfileActivity.class);
+        Intent createProfile = new Intent(this, CreateProfileInfoActivity.class);
         startActivity(createProfile);
     }
 }

@@ -22,7 +22,7 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/editText"
+        android:id="@+id/editName"
         android:textSize="20sp"
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
@@ -35,7 +35,7 @@
         android:text="@string/country_question"
         android:textSize="20sp"
         android:id="@+id/textView4"
-        android:layout_below="@+id/editText"
+        android:layout_below="@+id/editName"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="40dp"/>
@@ -71,29 +71,6 @@
         android:layout_toRightOf="@+id/textView5"
         android:layout_toEndOf="@+id/textView5" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/bday_question"
-        android:textSize="20sp"
-        android:id="@+id/textView6"
-        android:layout_below="@+id/textView5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="60dp"/>
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="date"
-        android:text="@string/birthdate"
-        android:ems="10"
-        android:id="@+id/editBirthdate"
-        android:textSize="20sp"
-        android:layout_below="@+id/textView6"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
@@ -104,7 +81,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="initProfileQuestions"/>
+        android:onClick="submitProfileData"/>
 
     <Button
         android:layout_width="wrap_content"

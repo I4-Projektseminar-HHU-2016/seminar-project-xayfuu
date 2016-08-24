@@ -2,5 +2,6 @@ package com.bromi.util;
 
 public class variables {
 
-    public final String PROFILE_DATA_FILENAME_TAG = "PROFILE_";
+    public static final String PROFILE_DATA_FILENAME = "PROFILE";
+    public static final int STRING_SIZE_LIMIT = 3;
 }
