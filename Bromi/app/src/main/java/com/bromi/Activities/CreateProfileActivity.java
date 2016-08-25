@@ -1,6 +1,5 @@
-package com.bromi;
+package com.bromi.Activities;
 
-import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.bromi.R;
 import com.bromi.util.*;
 
 import org.json.JSONArray;
@@ -24,7 +24,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 
-public class CreateProfileQuestionsActivity extends AppCompatActivity {
+public class CreateProfileActivity extends AppCompatActivity {
 
     private EditText name;
     private AutoCompleteTextView countryEdit;
@@ -38,7 +38,7 @@ public class CreateProfileQuestionsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_profile_questions);
+        setContentView(R.layout.activity_create_profile);
 
         name = (EditText) findViewById(R.id.editName);
         countryEdit = (AutoCompleteTextView) findViewById(R.id.autocomplete_country);
@@ -82,8 +82,8 @@ public class CreateProfileQuestionsActivity extends AppCompatActivity {
                 public void onFocusChange(View view, boolean hasFocus) {
 
                     if (!hasFocus) {
-                        if (utility.isEmpty(enteredString) && enteredString.length() < variables.STRING_SIZE_LIMIT) {
-                            utility.showToast("Please make sure your name is at least 3 symbols long!", getApplicationContext());
+                        if (methods.isEmpty(enteredString) && enteredString.length() < variables.STRING_SIZE_LIMIT) {
+                            methods.showToast("Please make sure your name is at least 3 symbols long!", getApplicationContext());
                         }
                         else { nameIsValid = true; }
                     }
@@ -126,7 +126,7 @@ public class CreateProfileQuestionsActivity extends AppCompatActivity {
                             }
                         }
                         if (!countryIsValid) {
-                            utility.showToast("Please make sure you enter a legitimate country!", getApplicationContext());
+                            methods.showToast("Please make sure you enter a legitimate country!", getApplicationContext());
                         }
                     }
                 }
@@ -188,11 +188,11 @@ public class CreateProfileQuestionsActivity extends AppCompatActivity {
         else {
 
             if (!countryIsValid) {
-                utility.showToast("Please make sure you enter a legitimate country!", getApplicationContext());
+                methods.showToast("Please make sure you enter a legitimate country!", getApplicationContext());
             }
 
             if (!nameIsValid) {
-                utility.showToast("Please make sure your name is at least 3 symbols long!", getApplicationContext());
+                methods.showToast("Please make sure your name is at least 3 symbols long!", getApplicationContext());
             }
         }
     }
@@ -219,7 +219,7 @@ public class CreateProfileQuestionsActivity extends AppCompatActivity {
             FileOutputStream fos = openFileOutput(variables.PROFILE_DATA_FILENAME, Context.MODE_PRIVATE);
 
             // Create JSON
-            JSONArray data = utility.createProfileJSONObject(name, country, gender);
+            JSONArray data = methods.createProfileJSONObject(name, country, gender);
 
             // Write onto device's storage
             fos.write(data.toString().getBytes());
@@ -237,8 +237,10 @@ public class CreateProfileQuestionsActivity extends AppCompatActivity {
              fis.close();
              bis.close();
 
-             utility.readProfileFromJSONBuffer(buffer, data);
+             methods.readProfileFromJSONBuffer(buffer);
              */
+
+            methods.showToast("Profile created!", getBaseContext());
         }
         else {
 
@@ -252,7 +254,7 @@ public class CreateProfileQuestionsActivity extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     deleteFile(variables.PROFILE_DATA_FILENAME);    // Delete Profile
-                    utility.showToast("Profile deleted.", getApplicationContext());
+                    methods.showToast("Profile deleted.", getApplicationContext());
                 }
 
             }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {

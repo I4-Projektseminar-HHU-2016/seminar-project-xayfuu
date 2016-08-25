@@ -8,14 +8,14 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogInActivity" />
+        <activity android:name=".Activities.LogInActivity" />
         <!--
  ATTENTION: This was auto-generated to add Google Play services to your project for
      App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -24,9 +24,10 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <activity android:name=".StartScreenActivity" />
-        <activity android:name=".CreateProfileInfoActivity" />
-        <activity android:name=".CreateProfileQuestionsActivity"></activity>
+        <activity android:name=".Activities.StartScreenActivity" />
+        <activity android:name=".Activities.CreateProfileInfoActivity" />
+        <activity android:name=".Activities.CreateProfileActivity" />
+        <activity android:name=".Activities.MainMenuActivity"></activity>
     </application>
 
 </manifest>

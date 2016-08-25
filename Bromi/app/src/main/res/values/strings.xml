@@ -3,9 +3,15 @@
     <string name="placeholder">...</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="ok">OK</string>
+    <string name="loading">Loading . . .</string>
+    <string name="submit">Submit</string>
+    <string name="quit">Quit</string>
+    <string name="ver_info">ver. 0.09</string>
+    <string name="app_name">Bromi</string>
+    <string name="user_name">User_name</string>
 
     <!-- Start menu -->
-    <string name="app_name">Bromi</string>
     <string name="sub_app_name">The Language Training App</string>
     <string name="tap_here">Tap Here to Start!</string>
     <string name="log_in">Log In</string>
@@ -13,12 +19,18 @@
 
     <!-- Create Profile -->
     <string name="create_profile_welcome_text">Welcome to Bromi! Before you get started with the game, you must create a user profile where we will keep track of your process and valuable achievements you have gained throughout your practice!</string>
-    <string name="create_profile_welcome_text2">Just answer the following questions and you are good to go! (Note that you can not change your answers later)</string>
-    <string name="create_profile_welcome_text3">If you already have a profile, you can use the following step to delete it and create a new one. Only one profile can be created!</string>
+    <string name="create_profile_welcome_text2">Just answer the following questions and you are good to go! (Note that you can not change the data you have entered afterwards.)</string>
+    <string name="create_profile_welcome_text3">If you already have a profile, you can use the following step to delete it and create a new one. Only one profile can be created at a time!</string>
     <string name="name_question">What would you like to be called?</string>
     <string name="country_question">What country are you from?</string>
     <string name="gender_question">What gender are you?</string>
-    <string name="dialog_delete_profile">"It was detected that a profile already exists. Do you want to delete it? (All progress and data will be lost.)</string>
+    <string name="dialog_delete_profile">It was detected that a profile already exists. Do you want to delete it? (All progress and data will be lost.)</string>
+    <string name="dialog_create_profile">Could not find Profile. Would you like to create one now?</string>
+
+    <!-- Main Menu -->
+    <string name="practice_button_text">Practice</string>
+    <string name="challenge_button_text">Challenge\n(Coming soon)</string>
+    <string name="endless_button_text">Endless\n(Coming soon)</string>
 
     <!-- Gender Container -->
     <string-array name="gender_array">

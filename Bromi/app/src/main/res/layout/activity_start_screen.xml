@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.bromi.MainActivity"
+    tools:context=".Activities.MainActivity"
     android:clickable="false">
 
     <TextView
@@ -33,20 +33,20 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/log_in"
-        android:id="@+id/chooseProfileButton"
-        android:layout_alignBottom="@+id/createProfileButton"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="43dp" />
+        android:text="@string/create_profile"
+        android:id="@+id/createProfileButton"
+        android:onClick="buttonCreateProfile"
+        android:layout_below="@+id/logInButton"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/create_profile"
-        android:id="@+id/createProfileButton"
-        android:onClick="buttonCreateProfile"
-        android:layout_alignParentBottom="true"
+        android:text="@string/log_in"
+        android:id="@+id/logInButton"
+        android:onClick="buttonLogIn"
+        android:layout_below="@+id/titleView2"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="107dp" />
+        android:layout_marginTop="134dp" />
 
 </RelativeLayout>

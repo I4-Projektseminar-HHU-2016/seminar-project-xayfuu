@@ -7,11 +7,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class utility {
+public class methods {
 
     /**
      * Check if a string is empty
@@ -54,17 +53,16 @@ public class utility {
     /**
      * Reads a Profile from a JSON Buffered String
      * @param buffered - the String created upon reading a JSON String from the device's internal storage beforehand
-     * @param baseArray - the JSONArray itself
      * @return a HashMap with all elements of the JSONObject as key;value pairs
      * @throws JSONException
      */
-    public static HashMap<String, String> readProfileFromJSONBuffer(StringBuilder buffered, JSONArray baseArray) throws JSONException {
+    public static HashMap<String, String> readProfileFromJSONBuffer(StringBuilder buffered) throws JSONException {
 
         // http://stackoverflow.com/questions/4307118/jsonarray-to-hashmap
         JSONArray readData = new JSONArray(buffered.toString());
         HashMap<String, String> profileData = new HashMap<>();
 
-        for (int i = 0; i < baseArray.length(); i++) {
+        for (int i = 0; i < readData.length(); i++) {
             JSONObject toPut = readData.optJSONObject(i);
             Iterator iter = toPut.keys();
 
@@ -72,16 +70,35 @@ public class utility {
                 String key = iter.next().toString();
                 profileData.put(key, toPut.getString(key));
             }
-            /**
+
              System.out.println(profileData);
              System.out.println(profileData.size());
              System.out.println(profileData.get("name"));
              System.out.println(profileData.get("gender"));
              System.out.println(profileData.get("country"));
-             */
+
         }
 
         return profileData;
+    }
+
+    /**
+     * Used to convert the profile string that's being carried between activities back to a HashMap.
+     * @param mapString - the string that needs to be converted, i.e. {name=fdghsdfhds, gender=Male, country=Germany}
+     * @return the hashMap object
+     * http://stackoverflow.com/questions/26485964/how-to-convert-string-into-hashmap-in-java
+     */
+    public static HashMap<String, String> stringToHashMap(String mapString) {
+        HashMap<String, String> ret = new HashMap<>();
+        mapString = mapString.substring(1, mapString.length()-1);
+        String[] keyValuePairs = mapString.split(",");
+
+        for(String pair : keyValuePairs) {
+            String[] entry = pair.split("=");
+            ret.put(entry[0].trim(), entry[1].trim());
+        }
+
+        return null;
     }
 }
 
