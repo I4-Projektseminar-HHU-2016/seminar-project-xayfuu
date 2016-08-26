@@ -1,10 +1,13 @@
 package com.bromi.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 
 import com.bromi.R;
 import com.bromi.util.methods;
+import com.bromi.util.variables;
 
 import java.util.HashMap;
 
@@ -22,5 +25,12 @@ public class MainMenuActivity extends AppCompatActivity {
             String s = extras.getString("Profile Data");
             profileData = methods.stringToHashMap(s);
         }
+    }
+
+    public void buttonPractice(View view) {
+        int modeId = variables.PRACTICE_MODE_ID;
+        Intent languageSelect = new Intent(this, LanguageSelectActivity.class);
+        languageSelect.putExtra("ModeId", modeId);
+        startActivity(languageSelect);
     }
 }

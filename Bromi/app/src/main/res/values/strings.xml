@@ -9,7 +9,7 @@
     <string name="quit">Quit</string>
     <string name="ver_info">ver. 0.09</string>
     <string name="app_name">Bromi</string>
-    <string name="user_name">User_name</string>
+    <string name="user_name">Trirongone</string>
 
     <!-- Start menu -->
     <string name="sub_app_name">The Language Training App</string>
@@ -31,6 +31,18 @@
     <string name="practice_button_text">Practice</string>
     <string name="challenge_button_text">Challenge\n(Coming soon)</string>
     <string name="endless_button_text">Endless\n(Coming soon)</string>
+
+    <!-- Language Select -->
+    <string name="GER">German (Deutsch)</string>
+    <string name="TRK">Turkish (Türkçe)</string>
+    <string name="FR">French (Français)</string>
+    <string name="SPN">Spanish (Español)</string>
+    <string name="ENG">English</string>
+    <string name="RUS">Russian (русский язык)</string>
+    <string name="CHNs">Chinese (Simpl.) (汉语)</string>
+    <string name="CHNt">Chinese (Trad.) (漢語)</string>
+    <string name="JPN">Japanese (日本語)</string>
+    <string name="KOR">Korean (한국어)</string>
 
     <!-- Gender Container -->
     <string-array name="gender_array">

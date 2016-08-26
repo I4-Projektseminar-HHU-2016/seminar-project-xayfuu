@@ -21,7 +21,8 @@
         android:background="@drawable/main_menu_button_bg"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="160dp" />
+        android:layout_marginTop="140dp"
+        android:onClick="buttonPractice" />
 
     <!-- Button Background Made with http://angrytools.com/android/button/ -->
     <Button
