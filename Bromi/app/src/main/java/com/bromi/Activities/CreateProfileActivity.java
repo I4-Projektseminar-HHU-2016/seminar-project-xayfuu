@@ -82,7 +82,7 @@ public class CreateProfileActivity extends AppCompatActivity {
                 public void onFocusChange(View view, boolean hasFocus) {
 
                     if (!hasFocus) {
-                        if (methods.isEmpty(enteredString) && enteredString.length() < variables.STRING_SIZE_LIMIT) {
+                        if (methods.isEmpty(enteredString) && enteredString.length() < constants.STRING_SIZE_LIMIT) {
                             methods.showToast("Please make sure your name is at least 3 symbols long!", getApplicationContext());
                         }
                         else { nameIsValid = true; }
@@ -216,7 +216,7 @@ public class CreateProfileActivity extends AppCompatActivity {
 
         if (!profileExists()){
 
-            FileOutputStream fos = openFileOutput(variables.PROFILE_DATA_FILENAME, Context.MODE_PRIVATE);
+            FileOutputStream fos = openFileOutput(constants.PROFILE_DATA_FILENAME, Context.MODE_PRIVATE);
 
             // Create JSON
             JSONArray data = methods.createProfileJSONObject(name, country, gender);
@@ -226,7 +226,7 @@ public class CreateProfileActivity extends AppCompatActivity {
             fos.close();
 
             /** Test to make sure it worked
-             FileInputStream fis = openFileInput(variables.PROFILE_DATA_FILENAME);
+             FileInputStream fis = openFileInput(constants.PROFILE_DATA_FILENAME);
              BufferedInputStream bis = new BufferedInputStream(fis);
              StringBuilder buffer = new StringBuilder();
 
@@ -253,7 +253,7 @@ public class CreateProfileActivity extends AppCompatActivity {
 
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
-                    deleteFile(variables.PROFILE_DATA_FILENAME);    // Delete Profile
+                    deleteFile(constants.PROFILE_DATA_FILENAME);    // Delete Profile
                     methods.showToast("Profile deleted.", getApplicationContext());
                 }
 
@@ -274,7 +274,7 @@ public class CreateProfileActivity extends AppCompatActivity {
         String[] files = fileList();
         for (String file : files) {
             System.out.println(file);
-            if (file.equals(variables.PROFILE_DATA_FILENAME)) {
+            if (file.equals(constants.PROFILE_DATA_FILENAME)) {
                 return true;
             }
         }

@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.bromi.R;
+import com.bromi.util.constants;
 import com.bromi.util.methods;
-import com.bromi.util.variables;
 
 import java.util.HashMap;
 
@@ -28,7 +28,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     public void buttonPractice(View view) {
-        int modeId = variables.PRACTICE_MODE_ID;
+        int modeId = constants.PRACTICE_MODE_ID;
         Intent languageSelect = new Intent(this, LanguageSelectActivity.class);
         languageSelect.putExtra("ModeId", modeId);
         startActivity(languageSelect);

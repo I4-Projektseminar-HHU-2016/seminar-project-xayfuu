@@ -26,19 +26,19 @@ public class LanguageSelectActivity extends AppCompatActivity {
     }
 
     public void buttonGerman(View view) {
-        languageId = variables.LANGUAGE_ID_GERMAN;
+        languageId = constants.LANGUAGE_ID_GERMAN;
 
-        if (modeId == variables.PRACTICE_MODE_ID) {
+        if (modeId == constants.PRACTICE_MODE_ID) {
             initNextActivity = new Intent(this, PracticeLevelSelectActivity.class);
             initNextActivity
                     .putExtra("languageId", languageId)
                     .putExtra("modeId", modeId);
             startActivity(initNextActivity);
         }
-        else if (modeId == variables.CHALLENGE_MODE_ID) {
+        else if (modeId == constants.CHALLENGE_MODE_ID) {
             // TODO
         }
-        else if (modeId == variables.ENDLESS_MODE_ID) {
+        else if (modeId == constants.ENDLESS_MODE_ID) {
             // TODO
         }
         else {
