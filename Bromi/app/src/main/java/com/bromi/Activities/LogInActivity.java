@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.bromi.R;
+import com.bromi.db.LanguageLevelData;
 import com.bromi.db.LanguageLevelDbHelper;
 import com.bromi.util.*;
 
@@ -91,14 +92,23 @@ public class LogInActivity extends AppCompatActivity {
     private void loadLanguageLevelDb() {
         langDb = new LanguageLevelDbHelper(this);
         langDb.insertLevelData();
-        Cursor level1 = langDb.getLevel(1);
-        level1.moveToFirst();
 
-        String item = level1.getString(level1.getColumnIndexOrThrow(LanguageLevelDbHelper.Entries.LANGUAGE_COLUMN_FOREIGN_WORD));
-        String item2 = level1.getString(level1.getColumnIndexOrThrow(LanguageLevelDbHelper.Entries.LANGUAGE_COLUMN_TRANSLATED_WORD));
-
-        System.out.println(item);
-        System.out.println(item2);
+        // Test
+        Cursor l1 = langDb.getLevel(0);
+        Cursor l2 = langDb.getLevel(1);
+        Cursor l3 = langDb.getLevel(2);
+        Cursor l4 = langDb.getLevel(3);
+        Cursor l5 = langDb.getLevel(4);
+        HashMap<String, String> level1 = langDb.readWordPairsAsMap(l1);
+        HashMap<String, String> level2 = langDb.readWordPairsAsMap(l2);
+        HashMap<String, String> level3 = langDb.readWordPairsAsMap(l3);
+        HashMap<String, String> level4 = langDb.readWordPairsAsMap(l4);
+        HashMap<String, String> level5 = langDb.readWordPairsAsMap(l5);
+        System.out.println(level1.toString());
+        System.out.println(level2.toString());
+        System.out.println(level3.toString());
+        System.out.println(level4.toString());
+        System.out.println(level5.toString());
     }
 
     /**

@@ -71,11 +71,13 @@ public class methods {
                 profileData.put(key, toPut.getString(key));
             }
 
+            /**
              System.out.println(profileData);
              System.out.println(profileData.size());
              System.out.println(profileData.get("name"));
              System.out.println(profileData.get("gender"));
              System.out.println(profileData.get("country"));
+             **/
 
         }
 
