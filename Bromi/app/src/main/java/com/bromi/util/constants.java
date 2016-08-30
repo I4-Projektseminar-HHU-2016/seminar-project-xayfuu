@@ -7,6 +7,7 @@ public class constants {
     public static final String SINGLE_CHOICE_IDENTIFIER = "SC";
 
     public static final int STRING_SIZE_LIMIT = 3;
+    public static final int ANSWER_POSSIBILITY_SIZE = 4;
 
     public static final int PRACTICE_MODE_ID = 0;
     public static final int CHALLENGE_MODE_ID = 1;

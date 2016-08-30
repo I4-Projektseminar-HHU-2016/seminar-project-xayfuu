@@ -23,11 +23,15 @@ import java.util.HashMap;
 public class LogInActivity extends AppCompatActivity {
 
     private LanguageLevelDbHelper langDb;
+    private Intent mainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        mainMenu = new Intent(this, MainMenuActivity.class);
+
+        loadLanguageLevelDb();
 
         try {
             checkProfile();
@@ -35,8 +39,7 @@ public class LogInActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        loadLanguageLevelDb();
-
+        startActivity(mainMenu);
     }
 
     /**
@@ -64,9 +67,7 @@ public class LogInActivity extends AppCompatActivity {
 
             HashMap<String, String> profileMap = methods.readProfileFromJSONBuffer(buffer);
 
-            Intent mainMenu = new Intent(this, MainMenuActivity.class);
             mainMenu.putExtra("Profile Data", profileMap.toString());
-            startActivity(mainMenu);
         }
         else {
 
@@ -93,7 +94,7 @@ public class LogInActivity extends AppCompatActivity {
         langDb = new LanguageLevelDbHelper(this);
         langDb.insertLevelData();
 
-        // Test
+        /** Test
         Cursor l1 = langDb.getLevel(0);
         Cursor l2 = langDb.getLevel(1);
         Cursor l3 = langDb.getLevel(2);
@@ -109,6 +110,7 @@ public class LogInActivity extends AppCompatActivity {
         System.out.println(level3.toString());
         System.out.println(level4.toString());
         System.out.println(level5.toString());
+         */
     }
 
     /**

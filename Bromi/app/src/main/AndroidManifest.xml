@@ -40,8 +40,9 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.LanguageSelectActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Activities.PracticeLevelSelectActivity"></activity>
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.PracticeLevelSelectActivity" />
+        <activity android:name=".Activities.PracticeLevelActivity"></activity>
     </application>
 
 </manifest>

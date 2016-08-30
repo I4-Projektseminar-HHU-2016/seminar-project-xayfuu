@@ -3,6 +3,8 @@ package com.bromi.util;
 import android.content.Context;
 import android.widget.Toast;
 
+import com.bromi.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -101,6 +103,39 @@ public class methods {
         }
 
         return null;
+    }
+
+    /**
+     * Converts a language ID to the string it refers to
+     * @param id - the desired language ID
+     * @param c - used solely for the purpose of having strings.xml available for use
+     * @return - Language String or null if it wasn't found
+     */
+    public static String getLanguageFromId(int id, Context c) {
+        switch(id) {
+            case(constants.LANGUAGE_ID_GERMAN):
+                return " " + c.getResources().getString(R.string.GER);
+            case(constants.LANGUAGE_ID_TURKISH):
+                return " " + c.getResources().getString(R.string.TRK);
+            case(constants.LANGUAGE_ID_FRENCH):
+                return " " + c.getResources().getString(R.string.FR);
+            case(constants.LANGUAGE_ID_SPANISH):
+                return " " + c.getResources().getString(R.string.SPN);
+            case(constants.LANGUAGE_ID_CHINESE_SIMPLIFIED):
+                return " " + c.getResources().getString(R.string.CHNs);
+            case(constants.LANGUAGE_ID_CHINESE_TRADITIONAL):
+                return " " + c.getResources().getString(R.string.CHNt);
+            case(constants.LANGUAGE_ID_JAPANESE):
+                return " " + c.getResources().getString(R.string.JPN);
+            case(constants.LANGUAGE_ID_KOREAN):
+                return " " + c.getResources().getString(R.string.KOR);
+            case(constants.LANGUAGE_ID_ENGLISH):
+                return " " + c.getResources().getString(R.string.ENG);
+            case(constants.LANGUAGE_ID_RUSSIAN):
+                return " " + c.getResources().getString(R.string.RUS);
+            default:
+                return null;
+        }
     }
 }
 

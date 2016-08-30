@@ -44,6 +44,28 @@
     <string name="JPN">Japanese (日本語)</string>
     <string name="KOR">Korean (한국어)</string>
 
+    <!-- Level Select -->
+    <string name="selected_mode">Practice Mode: </string>
+    <string name="selected_language">Selected Language</string>
+    <string name="level_1">1</string>
+    <string name="level_2">2</string>
+    <string name="level_3">3</string>
+    <string name="level_4">4</string>
+    <string name="level_5">5</string>
+    <string name="level_6">6</string>
+    <string name="level_7">7</string>
+    <string name="level_8">8</string>
+    <string name="level_exam">Exam</string>
+
+    <!-- Level Play -->
+    <string name="current_vocabulary">None</string>
+    <string name="answer_possibility_1">Answer 1</string>
+    <string name="answer_possibility_2">Answer 2</string>
+    <string name="answer_possibility_3">Answer 3</string>
+    <string name="answer_possibility_4">Answer 4</string>
+    <string name="level_indicator_text"> [Lvl.1]</string>
+    <string name="level_progress_indicator">0/0</string>
+
     <!-- Gender Container -->
     <string-array name="gender_array">
         <item>Male</item>
