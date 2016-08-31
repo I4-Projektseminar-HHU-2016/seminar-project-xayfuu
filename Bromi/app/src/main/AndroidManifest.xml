@@ -41,8 +41,13 @@
         <activity
             android:name=".Activities.LanguageSelectActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".Activities.PracticeLevelSelectActivity" />
-        <activity android:name=".Activities.PracticeLevelActivity"></activity>
+        <activity
+            android:name=".Activities.PracticeLevelSelectActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.PracticeLevelActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".Activities.PracticeResultScreenActivity"></activity>
     </application>
 
 </manifest>

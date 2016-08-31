@@ -70,13 +70,14 @@
         android:layout_height="wrap_content"
         android:text="@string/answer_possibility_1"
         android:id="@+id/answer_possibility_1"
-        android:layout_below="@+id/current_vocabulary"
         android:textSize="20sp"
         android:textAllCaps="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="70dp"
-        android:background="@drawable/answer_button_normal" />
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="230dp"
+        android:background="@drawable/answer_button_normal"
+        android:onClick="submitAnswer" />
 
     <Button
         android:layout_width="wrap_content"
@@ -88,7 +89,9 @@
         android:layout_alignBottom="@+id/answer_possibility_1"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/answer_button_normal" />
+        android:layout_marginRight="5dp"
+        android:background="@drawable/answer_button_normal"
+        android:onClick="submitAnswer" />
 
     <Button
         android:layout_width="wrap_content"
@@ -100,8 +103,10 @@
         android:textAllCaps="false"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/answer_button_normal"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="5dp"
+        android:background="@drawable/answer_button_normal"
+        android:onClick="submitAnswer" />
 
     <Button
         android:layout_width="wrap_content"
@@ -113,7 +118,8 @@
         android:layout_alignBottom="@+id/answer_possibility_3"
         android:layout_alignRight="@+id/answer_possibility_2"
         android:layout_alignEnd="@+id/answer_possibility_2"
-        android:background="@drawable/answer_button_normal"/>
+        android:background="@drawable/answer_button_normal"
+        android:onClick="submitAnswer" />
 
     <Button
         android:layout_width="wrap_content"

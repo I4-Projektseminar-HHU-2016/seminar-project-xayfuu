@@ -45,7 +45,7 @@
     <string name="KOR">Korean (한국어)</string>
 
     <!-- Level Select -->
-    <string name="selected_mode">Practice Mode: </string>
+    <string name="selected_mode">Practice: </string>
     <string name="selected_language">Selected Language</string>
     <string name="level_1">1</string>
     <string name="level_2">2</string>

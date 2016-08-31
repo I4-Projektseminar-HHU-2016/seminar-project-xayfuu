@@ -59,6 +59,7 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
                 b.setVisibility(View.INVISIBLE);
                 practiceLevel.putExtra("modeId", modeId);
                 practiceLevel.putExtra("languageId", languageId);
+                practiceLevel.putExtra("levelId", levelId);
                 startActivity(practiceLevel);
                 b.setVisibility(View.VISIBLE);
             }
