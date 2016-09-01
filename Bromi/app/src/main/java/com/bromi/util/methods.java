@@ -93,13 +93,16 @@ public class methods {
      * http://stackoverflow.com/questions/26485964/how-to-convert-string-into-hashmap-in-java
      */
     public static HashMap<String, String> stringToHashMap(String mapString) {
-        HashMap<String, String> ret = new HashMap<>();
-        mapString = mapString.substring(1, mapString.length()-1);
-        String[] keyValuePairs = mapString.split(",");
+        if (!mapString.isEmpty() && !mapString.equals("")) {
+            HashMap<String, String> ret = new HashMap<>();
+            mapString = mapString.substring(1, mapString.length() - 1);
+            String[] keyValuePairs = mapString.split(",");
 
-        for(String pair : keyValuePairs) {
-            String[] entry = pair.split("=");
-            ret.put(entry[0].trim(), entry[1].trim());
+            for (String pair : keyValuePairs) {
+                String[] entry = pair.split("=");
+                ret.put(entry[0].trim(), entry[1].trim());
+            }
+            return ret;
         }
 
         return null;

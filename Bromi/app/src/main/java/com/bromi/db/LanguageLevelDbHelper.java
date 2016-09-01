@@ -91,6 +91,7 @@ public class LanguageLevelDbHelper extends SQLiteOpenHelper {
 
                 String foreign_word = c.getString(c.getColumnIndex(Entries.COLUMN_FOREIGN_WORD));
                 String translated_word = c.getString(c.getColumnIndex(Entries.COLUMN_TRANSLATED_WORD));
+
                 pairs.put(foreign_word, translated_word);
 
             } while (c.moveToNext());

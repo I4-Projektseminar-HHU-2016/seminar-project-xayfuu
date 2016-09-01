@@ -9,4 +9,85 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bromi.Activities.PracticeResultScreenActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/selected_mode"
+        android:id="@+id/textView8"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/selected_language"
+        android:id="@+id/language_view"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textView8"
+        android:layout_toEndOf="@+id/textView8" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/level_indicator_text"
+        android:id="@+id/level_indicator_text"
+        android:layout_above="@+id/imageView"
+        android:layout_toRightOf="@+id/language_view"
+        android:layout_toEndOf="@+id/language_view" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:layout_below="@+id/textView8"
+        android:src="@drawable/bold_separator"
+        android:adjustViewBounds="true"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="40sp"
+        android:text="@string/level_results_text"
+        android:id="@+id/level_results_text"
+        android:layout_below="@+id/imageView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:text="@string/exp_gained_text"
+        android:id="@+id/exp_gained_text"
+        android:layout_below="@+id/level_results_text"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:layout_below="@+id/exp_gained_text"
+        android:src="@drawable/bold_separator"
+        android:layout_marginTop="20dp"
+        android:layout_centerHorizontal="true" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView3"
+        android:layout_marginTop="20dp"
+        android:id="@+id/vocabulary_results_layout"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
 </RelativeLayout>

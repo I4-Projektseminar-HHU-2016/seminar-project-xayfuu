@@ -44,7 +44,7 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
     }
 
     private void levelTransition(final Button b) {
-        final Animation fade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade);
+        final Animation fade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slow_fade_out);
         final Intent practiceLevel = new Intent(this, PracticeLevelActivity.class);
 
         b.startAnimation(fade);

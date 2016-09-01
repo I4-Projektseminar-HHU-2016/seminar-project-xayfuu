@@ -22,15 +22,16 @@ import java.util.Random;
 
 public class PracticeLevelActivity extends AppCompatActivity {
 
-    private int modeId;                 // Current mode selected
-    private int languageId;             // Current language selected
-    private int levelId;                // Current level selected
+    private int modeId = -1;                 // Current mode selected
+    private int languageId = -1;             // Current language selected
+    private int levelId = -1;                // Current level selected
     private int vocabularyTotalCount;   // Total vocabularies (equal to level_size)
     private int vocabularyUsedCount;    // Incremented value that keeps track of how many vocabularies have been tested
 
     private ArrayList<String> vocabularyUsed;       // Holds the strings of the vocabularies that were used already
     private HashMap<String,String> currentLevel;    // Holds the level data
     private ArrayList<String> answersGiven;         // Holds the user answers (from buttons answer1, 2, 3, 4)
+    private ArrayList<String> correctAnswersGiven;  // For each answer the user has given, either a true or false will be added to this List depending on if the answer is correct or not; this helps distinguishing true correct answers and wrong answers that are identical to another vocabulary of the same level but are actually not the answer
 
     private TextView level_indicator_text, level_progress_indicator, selected_language, current_vocabulary;     // Textviews from level layout
     private Button answer1, answer2, answer3, answer4;                                                          // Answer buttons
@@ -68,6 +69,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
         vocabularyUsedCount = 0;
         vocabularyUsed = new ArrayList<>();
         answersGiven = new ArrayList<>();
+        correctAnswersGiven = new ArrayList<>();
 
         loadLevelData();
         setLevelIndicatorText();
@@ -320,7 +322,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
      */
     public void submitAnswer(View view) {
         final Button pressed = (Button) findViewById(view.getId());
-        Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.shake);
+        Animation shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fast_short_shake);
 
         disableAllButtons();
 
@@ -329,6 +331,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
             @Override
             public void onAnimationStart(Animation animation) {
                 answersGiven.add(pressed.getText().toString());
+                correctAnswersGiven.add(compareAnswers(pressed.getText().toString(), currentLevel.get(current_vocabulary.getText().toString())));
                 System.out.println(answersGiven.toString());
             }
 
@@ -342,6 +345,23 @@ public class PracticeLevelActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    /**
+     * Checks if the user answers equals the solution. Primitive Boolean is not used here because ArrayList does not support primitive types.
+     * @param answer: Answer given by the user
+     * @param solution: Current vocabulary
+     * @return The boolean corresponding to whether the answer is right or wrong
+     */
+    private String compareAnswers(String answer, String solution) {
+        String ret;
+        if (answer.equals(solution)) {
+            ret = Boolean.TRUE.toString();
+        }
+        else {
+            ret = Boolean.FALSE.toString();
+        }
+        return ret;
     }
 
     /**
@@ -404,6 +424,9 @@ public class PracticeLevelActivity extends AppCompatActivity {
         results.putExtra("modeId", modeId);
         results.putExtra("levelId", levelId);
         results.putExtra("answersGiven", answersGiven);
+        results.putExtra("levelData", currentLevel.toString());
+        results.putExtra("correctAnswersGiven", correctAnswersGiven);
+        results.putExtra("vocabularyUsed", vocabularyUsed);
 
         new AlertDialog.Builder(this)
                 .setMessage("Level Complete!")
