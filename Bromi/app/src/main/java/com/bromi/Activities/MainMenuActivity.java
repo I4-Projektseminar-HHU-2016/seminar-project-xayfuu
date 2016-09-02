@@ -29,6 +29,7 @@ public class MainMenuActivity extends AppCompatActivity {
 
     public void buttonPractice(View view) {
         int modeId = constants.PRACTICE_MODE_ID;
+
         Intent languageSelect = new Intent(this, LanguageSelectActivity.class);
         languageSelect.putExtra("ModeId", modeId);
         startActivity(languageSelect);

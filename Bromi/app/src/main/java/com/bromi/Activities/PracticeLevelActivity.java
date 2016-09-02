@@ -26,12 +26,14 @@ public class PracticeLevelActivity extends AppCompatActivity {
     private int languageId = -1;             // Current language selected
     private int levelId = -1;                // Current level selected
     private int vocabularyTotalCount;   // Total vocabularies (equal to level_size)
-    private int vocabularyUsedCount;    // Incremented value that keeps track of how many vocabularies have been tested
+    private int vocabularyUsedCount;    // Incremented value that keeps track of how many vocabularies have been tested (Level progression counter)
 
     private ArrayList<String> vocabularyUsed;       // Holds the strings of the vocabularies that were used already
     private HashMap<String,String> currentLevel;    // Holds the level data
     private ArrayList<String> answersGiven;         // Holds the user answers (from buttons answer1, 2, 3, 4)
     private ArrayList<String> correctAnswersGiven;  // For each answer the user has given, either a true or false will be added to this List depending on if the answer is correct or not; this helps distinguishing true correct answers and wrong answers that are identical to another vocabulary of the same level but are actually not the answer
+
+    private boolean isNewLevel = true;
 
     private TextView level_indicator_text, level_progress_indicator, selected_language, current_vocabulary;     // Textviews from level layout
     private Button answer1, answer2, answer3, answer4;                                                          // Answer buttons
@@ -44,17 +46,30 @@ public class PracticeLevelActivity extends AppCompatActivity {
         setContentView(R.layout.activity_practice_level);
 
         Bundle extras = getIntent().getExtras();
+
         if (extras != null) {
             modeId = extras.getInt("modeId");
             languageId = extras.getInt("languageId");
             levelId = extras.getInt("levelId");
+            isNewLevel = extras.getBoolean("isNewLevel");
+        }
+
+        if (!isNewLevel && extras != null) {
+            vocabularyUsed = extras.getStringArrayList("vocabularyUsed");
+            currentLevel = methods.stringToHashMap(extras.getString("currentLevel"));
+            vocabularyTotalCount = currentLevel.size();
+
+        }
+        else {
+            vocabularyUsed = new ArrayList<>();
+            langDb = new LanguageLevelDbHelper(getApplicationContext());
+
+            loadLevelData();
         }
 
         // System.out.println(levelId);
         // System.out.println(languageId);
         // System.out.println(levelId);
-
-        langDb = new LanguageLevelDbHelper(getApplicationContext());
 
         level_indicator_text = (TextView) findViewById(R.id.level_indicator_text);
         selected_language = (TextView) findViewById(R.id.language_view);
@@ -67,11 +82,9 @@ public class PracticeLevelActivity extends AppCompatActivity {
         answer4 = (Button) findViewById(R.id.answer_possibility_4);
 
         vocabularyUsedCount = 0;
-        vocabularyUsed = new ArrayList<>();
         answersGiven = new ArrayList<>();
         correctAnswersGiven = new ArrayList<>();
 
-        loadLevelData();
         setLevelIndicatorText();
         setSelectedLanguage();
         setLevelProgressIndicator();
@@ -144,38 +157,69 @@ public class PracticeLevelActivity extends AppCompatActivity {
      * - A level is finished if newVocabulary equals "" and vocabularyUsedCount equals vocabularyTotalCount
      */
     private void runLevel() {
+
         if (currentLevel != null) {
 
-            String newVocabulary = getVocabulary();
-            // System.out.println("Vocabulary generated: " + newVocabulary);
+            if (isNewLevel) {
 
-            if (!newVocabulary.equals("")) {
+                String newVocabulary = getVocabulary();
+                // System.out.println("Vocabulary generated: " + newVocabulary);
 
-                if (vocabularyUsedCount != vocabularyTotalCount) {
-                    addUsedVocabulary(newVocabulary);
-                    setVocabularyText(newVocabulary);
-                    setAnswerText(generateAnswerButtonCaptionOrder(currentLevel.get(newVocabulary)));
-                    setLevelProgressIndicator();
+                if (!newVocabulary.equals("")) {
 
-                    vocabularyUsedCount++;
+                    if (vocabularyUsedCount != vocabularyTotalCount) {
+                        addUsedVocabulary(newVocabulary);
 
-                } else {
-                    System.out.println("Level done");
+                        setVocabularyText(newVocabulary);
+                        setAnswerText(generateAnswerButtonCaptionOrder(currentLevel.get(newVocabulary)));
+                        setLevelProgressIndicator();
+
+                        vocabularyUsedCount++;
+                    }
+                    else {
+                        System.out.println("Level done");
+                    }
+                }
+                else {
+                    // System.out.println(vocabularyUsedCount + " " + vocabularyTotalCount);
+
+                    if (vocabularyUsedCount == vocabularyTotalCount) {
+
+                        setLevelProgressIndicator();
+
+                        //System.out.println("Level done");
+
+                        initResultScreen();
+                    }
+                    else {
+                        runLevel();
+                    }
                 }
             }
             else {
-                // System.out.println(vocabularyUsedCount + " " + vocabularyTotalCount);
 
-                if (vocabularyUsedCount == vocabularyTotalCount) {
+                /**
+                System.out.println(vocabularyUsedCount);
+                System.out.println(vocabularyTotalCount);
+                System.out.println(vocabularyUsed.toString());
+                System.out.println(answersGiven.toString());
+                System.out.println(correctAnswersGiven.toString());
+                System.out.println(currentLevel.toString());
+                 */
 
+                if (vocabularyUsedCount != vocabularyTotalCount) {
+
+                    String nextVocabulary = vocabularyUsed.get(vocabularyUsedCount);
+
+                    setVocabularyText(nextVocabulary);
+                    setAnswerText(generateAnswerButtonCaptionOrder(currentLevel.get(nextVocabulary)));
                     setLevelProgressIndicator();
 
-                    //System.out.println("Level done");
-
-                    initResultScreen();
+                    vocabularyUsedCount++;
                 }
                 else {
-                    runLevel();
+                    setLevelProgressIndicator();
+                    initResultScreen();
                 }
             }
         }

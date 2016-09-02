@@ -63,6 +63,7 @@
         android:layout_toRightOf="@+id/level_1"
         android:layout_toEndOf="@+id/level_1"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:onClick="startLevelClicked" />
 
     <Button
@@ -76,6 +77,7 @@
         android:layout_toRightOf="@+id/level_2"
         android:layout_toEndOf="@+id/level_2"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:onClick="startLevelClicked" />
 
     <Button
@@ -89,6 +91,7 @@
         android:layout_toRightOf="@+id/level_3"
         android:layout_toEndOf="@+id/level_3"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:onClick="startLevelClicked" />
 
     <Button
@@ -112,6 +115,7 @@
         android:textSize="30sp"
         android:background="@drawable/level_select_unlocked"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_below="@+id/level_1"
         android:layout_alignTop="@+id/level_5"
         android:layout_toRightOf="@+id/level_5"
@@ -126,6 +130,7 @@
         android:textSize="30sp"
         android:background="@drawable/level_select_unlocked"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_below="@+id/level_1"
         android:layout_alignTop="@+id/level_6"
         android:layout_toRightOf="@+id/level_6"
@@ -140,6 +145,7 @@
         android:textSize="30sp"
         android:background="@drawable/level_select_unlocked"
         android:layout_marginLeft="20dp"
+        android:layout_marginStart="20dp"
         android:layout_below="@+id/level_1"
         android:layout_alignTop="@+id/level_7"
         android:layout_toRightOf="@+id/level_7"
@@ -168,5 +174,30 @@
         android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/level_exam" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView4"
+        android:src="@drawable/bold_separator"
+        android:adjustViewBounds="true"
+        android:layout_below="@+id/imageView2"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="130dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quit"
+        android:textAllCaps="false"
+        android:drawableLeft="@drawable/ic_cancel_black_24dp"
+        android:drawableStart="@drawable/ic_cancel_black_24dp"
+        android:drawablePadding="5dp"
+        android:id="@+id/quitButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/imageView4"
+        android:onClick="returnToLanguageSelect" />
 
 </RelativeLayout>

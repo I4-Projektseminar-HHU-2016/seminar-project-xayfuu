@@ -60,6 +60,7 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
                 practiceLevel.putExtra("modeId", modeId);
                 practiceLevel.putExtra("languageId", languageId);
                 practiceLevel.putExtra("levelId", levelId);
+                practiceLevel.putExtra("isNewLevel", true);
                 startActivity(practiceLevel);
                 b.setVisibility(View.VISIBLE);
             }
@@ -121,5 +122,11 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
             default:
                 levelId = -1;
         }
+    }
+
+    public void returnToLanguageSelect(View view) {
+        Intent lvlSelect = new Intent(this, LanguageSelectActivity.class);
+        lvlSelect.putExtra("modeId", modeId);
+        startActivity(lvlSelect);
     }
 }

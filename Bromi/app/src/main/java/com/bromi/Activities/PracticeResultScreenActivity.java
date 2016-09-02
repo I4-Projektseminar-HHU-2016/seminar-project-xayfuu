@@ -1,6 +1,9 @@
 package com.bromi.Activities;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.TypedValue;
@@ -11,6 +14,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bromi.R;
+import com.bromi.db.LanguageLevelData;
 import com.bromi.util.methods;
 
 import org.w3c.dom.Text;
@@ -143,6 +147,63 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
             level_results_text.setText("You Failed...");
 
             startLevelResultAnimationNegative();
+        }
+    }
+
+    /*****************
+     * B U T T O N S *
+     *****************/
+
+    public void returnToLevelSelectScreen(View view) {
+        Intent levelSelect = new Intent(this, PracticeLevelSelectActivity.class);
+        levelSelect.putExtra("modeId", modeId);
+        levelSelect.putExtra("languageId", languageId);
+        startActivity(levelSelect);
+    }
+
+    public void redoLevel(View view) {
+        Intent redoLvl = new Intent(this, PracticeLevelActivity.class);
+        redoLvl.putExtra("levelId", levelId);
+        redoLvl.putExtra("languageId", languageId);
+        redoLvl.putExtra("modeId", modeId);
+        redoLvl.putExtra("isNewLevel", false);
+        redoLvl.putExtra("vocabularyUsed", vocabularyOrder);
+        redoLvl.putExtra("currentLevel", levelData.toString());
+        startActivity(redoLvl);
+    }
+
+    public void nextLevel(View view) {
+        int next = levelId + 1;
+        final Intent nextLevel = new Intent(this, PracticeLevelActivity.class);
+
+        if (next < LanguageLevelData.level_count) {
+            nextLevel.putExtra("levelId", next);
+            nextLevel.putExtra("languageId", languageId);
+            nextLevel.putExtra("modeId", modeId);
+            nextLevel.putExtra("isNewLevel", true);
+            startActivity(nextLevel);
+        }
+        else {
+            new AlertDialog.Builder(this)
+                    .setMessage("This was the last available level fpr this language! Do you wish to return to the first level?")
+                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            nextLevel.putExtra("levelId", 0);
+                            nextLevel.putExtra("languageId", languageId);
+                            nextLevel.putExtra("modeId", modeId);
+                            nextLevel.putExtra("isNewLevel", true);
+                            startActivity(nextLevel);
+                        }
+
+                    }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    }).create().show();
         }
     }
 

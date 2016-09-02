@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import com.bromi.R;
+import com.bromi.db.LanguageLevelData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -93,16 +94,19 @@ public class methods {
      * http://stackoverflow.com/questions/26485964/how-to-convert-string-into-hashmap-in-java
      */
     public static HashMap<String, String> stringToHashMap(String mapString) {
-        if (!mapString.isEmpty() && !mapString.equals("")) {
-            HashMap<String, String> ret = new HashMap<>();
-            mapString = mapString.substring(1, mapString.length() - 1);
-            String[] keyValuePairs = mapString.split(",");
+        if (mapString != null) {
 
-            for (String pair : keyValuePairs) {
-                String[] entry = pair.split("=");
-                ret.put(entry[0].trim(), entry[1].trim());
+            if (!mapString.isEmpty() && !mapString.equals("")) {
+                HashMap<String, String> ret = new HashMap<>();
+                mapString = mapString.substring(1, mapString.length() - 1);
+                String[] keyValuePairs = mapString.split(",");
+
+                for (String pair : keyValuePairs) {
+                    String[] entry = pair.split("=");
+                    ret.put(entry[0].trim(), entry[1].trim());
+                }
+                return ret;
             }
-            return ret;
         }
 
         return null;

@@ -71,6 +71,9 @@
     <string name="level_passed">Level Passed!!</string>
     <string name="level_failed">Level Failed..</string>
     <string name="exp_gained_text">100 EXP gained!!</string>
+    <string name="next_level"> </string>
+    <string name="level_select"> </string>
+    <string name="redo"> </string>
 
     <!-- Gender Container -->
     <string-array name="gender_array">

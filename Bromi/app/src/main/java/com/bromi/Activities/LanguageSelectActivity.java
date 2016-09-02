@@ -47,4 +47,9 @@ public class LanguageSelectActivity extends AppCompatActivity {
             startActivity(initNextActivity);
         }
     }
+
+    public void returnToMainMenu(View view) {
+        Intent mainMenu = new Intent(this, MainMenuActivity.class);
+        startActivity(mainMenu);
+    }
 }
