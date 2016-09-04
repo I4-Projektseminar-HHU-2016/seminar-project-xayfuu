@@ -1,8 +1,8 @@
 # Bromi 
 
-This game was written for a course of the major Information Science and Language Technology at the Heinrich-Heine-Universität Düsseldorf. 
+This game was written as a project for a seminar of the major Information Science and Language Technology at the Heinrich-Heine-Universität Düsseldorf. 
 
-What is being presented here is a very simple language training app written in Java, for the purpose of practicing how to make an Android app on your own.
+What is being presented here is a very simple language training App written in Java, for the purpose of practicing how to make an Android App on my own.
 
 
 ## Features ##
@@ -57,9 +57,7 @@ Make sure your device's settings allows the installation of APK files.
 
 * [Java SE Development Kit 8+ (JDK 8+)](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
 * [Java Runtime Evironment](http://www.oracle.com/technetwork/java/javase/downloads/index.html)
-* [Android Studio 2.1+](https://developer.android.com/studio/index.html), including the Android SDK and Android Emulator VMs
-
-- Android Studio will download the Android SDK and android virtual machines on its own. 
+* [Android Studio 2.1+](https://developer.android.com/studio/index.html), including the Android SDK and Android Emulator VMs (Android Studio will download the Android SDK and android virtual machines on its own.) 
 
 - If you are on Windows, you must add a variable to your system's PATH environment for the code to be compilable. Search for `cmd` on your PC, open it, and enter the following:
 
@@ -75,10 +73,10 @@ set JAVA_HOME=C:\jdk1.7.0_75
 
 #### Running the Code
 
-Once you have installed Android Studio and set it up, you can fork/pull/download the project and open the project. Next, click on `Run` in the toolbar of Android Studio (the green arrow). After that, you will be asked to
-set up a virtual machine for the android emulator. Click on `Create New Emulator`. Then from the `Phone` tab, choose `Nexus 5X`, on which the whole project was being emulated. Click on `Next`. Next you have to choose what version
+Once you have installed Android Studio and set it up, you can fork/pull/download the project and open it. Next, click on `Run` in the toolbar of Android Studio (the green arrow). After that, you will be asked to
+set up a virtual machine for the android emulator. Click on `Create New Emulator`. Then from the `Phone` tab, choose `Nexus 5X`, on which the whole project was being emulated. Click on `Next`. Now you have to choose what version
 of Android you want to emulate. For this project, choose and download `Marshmallow` with `API Levl 23`, which is Android 6.0. Click on `Next`. All you have to do now is give the VM a name and click on `Finish`.
-Click on `Run` again. Android Studio will set up the Virtual Machine and start it whenver it's finished. This can take a few minutes.
+Click on `Run` again and choose the emulator you just created. Android Studio will set up the Virtual Machine and start it whenver it's finished. This can take a few minutes.
 
 If you receive an Error while setting up the VM, check if your BIOS settings enables Intel VT and AMD-V Virtualization. Restart your computer and press whatever button leads you to the BIOS setup menu. Look around for an option
 called  `Intel Virtualization Technology`, `Intel VT-x and AMD-V`, `Virtualization Extensions` or something similar and enable it. If your computer does not support virtualization, you cannot run the code on an emulator and thus
