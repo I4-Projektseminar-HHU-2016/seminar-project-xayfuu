@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.bromi.Activities.UserProfileActivity">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/profile"
+        android:id="@+id/textView7"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView5"
+        android:layout_below="@+id/textView7"
+        android:src="@drawable/bold_separator"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView6"
+        android:layout_below="@+id/imageView5"
+        android:src="@drawable/bold_separator"
+        android:layout_marginTop="150dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_avatar"
+        android:layout_below="@+id/imageView5"
+        android:src="@drawable/default_avatar"
+        android:layout_marginTop="30dp"
+        android:minHeight="50sp"
+        android:minWidth="50sp"
+        android:maxHeight="50sp"
+        android:maxWidth="50sp"
+        android:layout_centerHorizontal="true"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/user_name"
+        android:id="@+id/user_name"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/user_avatar" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="#000000"
+        android:layout_marginTop="25dp"
+        android:text="@string/vocabulary_answered_caption"
+        android:id="@+id/vocabulary_answered_caption"
+        android:layout_below="@+id/imageView6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="#000000"
+        android:layout_marginTop="15dp"
+        android:text="@string/levels_played_caption"
+        android:id="@+id/levels_played_caption"
+        android:layout_below="@+id/vocabulary_answered_caption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="#000000"
+        android:layout_marginTop="15dp"
+        android:text="@string/correct_vocabularies_caption"
+        android:id="@+id/correct_vocabularies_caption"
+        android:layout_below="@+id/levels_played_caption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="21sp"
+        android:textColor="#000000"
+        android:layout_marginTop="15dp"
+        android:text="@string/wrong_vocabularies_caption"
+        android:id="@+id/wrong_vocabularies_caption"
+        android:layout_below="@+id/correct_vocabularies_caption"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/vocabulary_answered"
+        android:id="@+id/vocabulary_answered"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:textSize="21sp"
+        android:textColor="#666666"
+        android:layout_alignTop="@+id/vocabulary_answered_caption"
+        android:layout_toRightOf="@+id/vocabulary_answered_caption"
+        android:layout_toEndOf="@+id/vocabulary_answered_caption" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/levels_played"
+        android:id="@+id/levels_played"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:textSize="21sp"
+        android:textColor="#666666"
+        android:layout_alignTop="@+id/levels_played_caption"
+        android:layout_toRightOf="@+id/levels_played_caption"
+        android:layout_toEndOf="@+id/levels_played_caption" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/correct_vocabularies"
+        android:id="@+id/correct_vocabularies"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:textSize="21sp"
+        android:textColor="#666666"
+        android:layout_alignTop="@+id/correct_vocabularies_caption"
+        android:layout_toRightOf="@+id/correct_vocabularies_caption"
+        android:layout_toEndOf="@+id/correct_vocabularies_caption" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/wrong_vocabularies"
+        android:id="@+id/wrong_vocabularies"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:textSize="21sp"
+        android:textColor="#666666"
+        android:layout_alignTop="@+id/wrong_vocabularies_caption"
+        android:layout_toRightOf="@+id/wrong_vocabularies_caption"
+        android:layout_toEndOf="@+id/wrong_vocabularies_caption" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quit"
+        android:id="@+id/quit"
+        android:drawableLeft="@drawable/ic_cancel_black_24dp"
+        android:drawableStart="@drawable/ic_cancel_black_24dp"
+        android:drawablePadding="5dp"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:onClick="returnToMenu" />
+
+</RelativeLayout>

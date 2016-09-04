@@ -1,7 +1,9 @@
 package com.bromi.Activities;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +17,22 @@ import android.widget.TextView;
 
 import com.bromi.R;
 import com.bromi.db.LanguageLevelData;
+import com.bromi.util.constants;
 import com.bromi.util.methods;
 
-import org.w3c.dom.Text;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class PracticeResultScreenActivity extends AppCompatActivity {
 
@@ -30,8 +42,9 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
     private String levelDataString = "";
 
     private ArrayList<String> answersGiven;
-    private ArrayList<String> correctAnswerGiven;
+    private ArrayList<String> correctAnswersGiven;
     private HashMap<String, String> levelData;
+    private HashMap<String, String> profileData;
     private ArrayList<String> vocabularyOrder;
 
     private TextView level_indicator_text, selected_language, level_results_text, exp_gained_text;
@@ -44,18 +57,19 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         answersGiven = new ArrayList<>();
-        correctAnswerGiven = new ArrayList<>();
+        correctAnswersGiven = new ArrayList<>();
         levelData = new HashMap<>();
         vocabularyOrder = new ArrayList<>();
 
         if (extras != null) {
-            modeId = extras.getInt("modeId");
-            languageId = extras.getInt("languageId");
-            levelId = extras.getInt("levelId");
+            modeId = extras.getInt(constants.BUNDLE_MODE_ID);
+            languageId = extras.getInt(constants.BUNDLE_LANGUAGE_ID);
+            levelId = extras.getInt(constants.BUNDLE_LEVEL_ID);
             answersGiven = extras.getStringArrayList("answersGiven");
             levelDataString = extras.getString("levelData");
-            correctAnswerGiven = extras.getStringArrayList("correctAnswersGiven");
+            correctAnswersGiven = extras.getStringArrayList("correctAnswersGiven");
             vocabularyOrder = extras.getStringArrayList("vocabularyUsed");
+            profileData = methods.stringToHashMap(extras.getString(constants.BUNDLE_PROFILE));
         }
 
         if (levelDataString != null && !levelDataString.equals("")) {
@@ -99,7 +113,7 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         LinearLayout linLay = (LinearLayout) findViewById(R.id.vocabulary_results_layout);
 
         /**
-        System.out.println(correctAnswerGiven.toString());
+        System.out.println(correctAnswersGiven.toString());
         System.out.println(levelId);
         System.out.println(levelData.toString());
          */
@@ -108,11 +122,11 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
 
         if (levelId != 42 && levelId != -1) {
 
-            if (!correctAnswerGiven.isEmpty() && !levelData.isEmpty() && !answersGiven.isEmpty() && !vocabularyOrder.isEmpty()) {
+            if (!correctAnswersGiven.isEmpty() && !levelData.isEmpty() && !answersGiven.isEmpty() && !vocabularyOrder.isEmpty()) {
 
-                for (int i = 0; i < correctAnswerGiven.size(); i++) {
+                for (int i = 0; i < correctAnswersGiven.size(); i++) {
 
-                    if (correctAnswerGiven.get(i).equals(Boolean.TRUE.toString())) {
+                    if (correctAnswersGiven.get(i).equals(Boolean.TRUE.toString())) {
                         correctAmt++;
                         createVocabularyTextView(i, linLay, "#2fb62f");
                     }
@@ -150,23 +164,63 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         }
     }
 
+    private void saveProfileToJSON() throws IOException, JSONException {
+        String jsonString = methods.loadJsonFromAssets(this.getApplicationContext());
+        JSONArray json = new JSONArray(jsonString);
+        JSONObject jsonObject = json.getJSONObject(0);
+
+        /**
+        int prevLevelsDone = (int) jsonObject.get(constants.STAT_LEVELS_DONE);
+        int prevVocabulariesDone = (int) jsonObject.get(constants.STAT_VOCABULARIES_DONE);
+        int prevCorrectVocabularies = (int) jsonObject.get(constants.STAT_CORRECT_VOCABULARIES);
+        int prevWrongVocabularies = (int) jsonObject.get(constants.STAT_WRONG_VOCABULARIES);
+
+
+        System.out.println(prevLevelsDone);
+        System.out.println(prevVocabulariesDone);
+        System.out.println(prevCorrectVocabularies);
+        System.out.println(prevWrongVocabularies);
+         */
+
+        jsonObject.put(constants.STAT_LEVELS_DONE, (Integer.parseInt(profileData.get(constants.STAT_LEVELS_DONE))));
+        jsonObject.put(constants.STAT_VOCABULARIES_DONE, (Integer.parseInt(profileData.get(constants.STAT_VOCABULARIES_DONE))));
+        jsonObject.put(constants.STAT_CORRECT_VOCABULARIES, (Integer.parseInt(profileData.get(constants.STAT_CORRECT_VOCABULARIES))));
+        jsonObject.put(constants.STAT_WRONG_VOCABULARIES, (Integer.parseInt(profileData.get(constants.STAT_WRONG_VOCABULARIES))));
+
+        json.put(jsonObject);
+
+        FileOutputStream fos = openFileOutput(constants.PROFILE_DATA_FILENAME, Context.MODE_PRIVATE);
+
+        fos.write(json.toString().getBytes());
+        fos.close();
+
+    }
+
     /*****************
      * B U T T O N S *
      *****************/
 
     public void returnToLevelSelectScreen(View view) {
+        try {
+            saveProfileToJSON();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
         Intent levelSelect = new Intent(this, PracticeLevelSelectActivity.class);
-        levelSelect.putExtra("modeId", modeId);
-        levelSelect.putExtra("languageId", languageId);
+        levelSelect.putExtra(constants.BUNDLE_MODE_ID, modeId);
+        levelSelect.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
+        levelSelect.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
         startActivity(levelSelect);
     }
 
     public void redoLevel(View view) {
         Intent redoLvl = new Intent(this, PracticeLevelActivity.class);
-        redoLvl.putExtra("levelId", levelId);
-        redoLvl.putExtra("languageId", languageId);
-        redoLvl.putExtra("modeId", modeId);
-        redoLvl.putExtra("isNewLevel", false);
+        redoLvl.putExtra(constants.BUNDLE_LEVEL_ID, levelId);
+        redoLvl.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
+        redoLvl.putExtra(constants.BUNDLE_MODE_ID, modeId);
+        redoLvl.putExtra(constants.BUNDLE_IS_NEW_LEVEL, false);
+        redoLvl.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
         redoLvl.putExtra("vocabularyUsed", vocabularyOrder);
         redoLvl.putExtra("currentLevel", levelData.toString());
         startActivity(redoLvl);
@@ -177,23 +231,25 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         final Intent nextLevel = new Intent(this, PracticeLevelActivity.class);
 
         if (next < LanguageLevelData.level_count) {
-            nextLevel.putExtra("levelId", next);
-            nextLevel.putExtra("languageId", languageId);
-            nextLevel.putExtra("modeId", modeId);
-            nextLevel.putExtra("isNewLevel", true);
+            nextLevel.putExtra(constants.BUNDLE_LEVEL_ID, next);
+            nextLevel.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
+            nextLevel.putExtra(constants.BUNDLE_MODE_ID, modeId);
+            nextLevel.putExtra(constants.BUNDLE_IS_NEW_LEVEL, true);
+            nextLevel.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
             startActivity(nextLevel);
         }
         else {
             new AlertDialog.Builder(this)
-                    .setMessage("This was the last available level fpr this language! Do you wish to return to the first level?")
+                    .setMessage("This was the last available level for this language! Do you wish to return to the first level?")
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            nextLevel.putExtra("levelId", 0);
-                            nextLevel.putExtra("languageId", languageId);
-                            nextLevel.putExtra("modeId", modeId);
-                            nextLevel.putExtra("isNewLevel", true);
+                            nextLevel.putExtra(constants.BUNDLE_LEVEL_ID, 0);
+                            nextLevel.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
+                            nextLevel.putExtra(constants.BUNDLE_MODE_ID, modeId);
+                            nextLevel.putExtra(constants.BUNDLE_IS_NEW_LEVEL, true);
+                            nextLevel.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
                             startActivity(nextLevel);
                         }
 
@@ -203,7 +259,9 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
                         public void onClick(DialogInterface dialogInterface, int i) {
 
                         }
-                    }).create().show();
+                    }).setCancelable(false)
+                        .create()
+                        .show();
         }
     }
 

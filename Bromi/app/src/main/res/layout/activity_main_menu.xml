@@ -83,25 +83,28 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="@string/user_name"
-        android:id="@+id/textView7"
+        android:id="@+id/user_name"
         android:textAllCaps="false"
         android:textSize="20dp"
         android:layout_marginTop="13dp"
         android:layout_marginRight="7dp"
         android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/user_avatar_main_menu"
-        android:layout_toStartOf="@+id/user_avatar_main_menu" />
+        android:layout_toLeftOf="@+id/user_avatar_clickable"
+        android:layout_toStartOf="@+id/user_avatar_clickable" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/user_avatar_main_menu"
+        android:id="@+id/user_avatar_clickable"
         android:adjustViewBounds="true"
-        android:maxHeight="50dp"
-        android:maxWidth="50dp"
-        android:src="@drawable/ava_zfgrunogre"
+        android:minHeight="50sp"
+        android:minWidth="50sp"
+        android:maxHeight="50sp"
+        android:maxWidth="50sp"
+        android:src="@drawable/default_avatar"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:clickable="true" />
 
 </RelativeLayout>

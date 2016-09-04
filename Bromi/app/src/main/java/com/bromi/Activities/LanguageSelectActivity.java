@@ -14,6 +14,8 @@ public class LanguageSelectActivity extends AppCompatActivity {
     private Intent initNextActivity;
     private int languageId = -1;
 
+    private String profileData;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,7 +23,8 @@ public class LanguageSelectActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         if (b!=null) {
-            modeId = b.getInt("ModeId");
+            modeId = b.getInt(constants.BUNDLE_MODE_ID);
+            profileData = b.getString(constants.BUNDLE_PROFILE);
         }
     }
 
@@ -31,8 +34,9 @@ public class LanguageSelectActivity extends AppCompatActivity {
         if (modeId == constants.PRACTICE_MODE_ID) {
             initNextActivity = new Intent(this, PracticeLevelSelectActivity.class);
             initNextActivity
-                    .putExtra("languageId", languageId)
-                    .putExtra("modeId", modeId);
+                    .putExtra(constants.BUNDLE_LANGUAGE_ID, languageId)
+                    .putExtra(constants.BUNDLE_MODE_ID, modeId)
+                    .putExtra(constants.BUNDLE_PROFILE, profileData);
             startActivity(initNextActivity);
         }
         else if (modeId == constants.CHALLENGE_MODE_ID) {
@@ -44,12 +48,14 @@ public class LanguageSelectActivity extends AppCompatActivity {
         else {
             methods.showToast("Error while loading Level Select screen.", getBaseContext());
             initNextActivity = new Intent(this, MainMenuActivity.class);
+            initNextActivity.putExtra(constants.BUNDLE_PROFILE, profileData);
             startActivity(initNextActivity);
         }
     }
 
     public void returnToMainMenu(View view) {
         Intent mainMenu = new Intent(this, MainMenuActivity.class);
+        mainMenu.putExtra(constants.BUNDLE_PROFILE, profileData);
         startActivity(mainMenu);
     }
 }

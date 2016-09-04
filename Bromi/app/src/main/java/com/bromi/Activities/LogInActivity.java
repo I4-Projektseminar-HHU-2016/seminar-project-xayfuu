@@ -3,6 +3,7 @@ package com.bromi.Activities;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,13 +24,11 @@ import java.util.HashMap;
 public class LogInActivity extends AppCompatActivity {
 
     private LanguageLevelDbHelper langDb;
-    private Intent mainMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        mainMenu = new Intent(this, MainMenuActivity.class);
 
         loadLanguageLevelDb();
 
@@ -38,8 +37,6 @@ public class LogInActivity extends AppCompatActivity {
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-
-        startActivity(mainMenu);
     }
 
     /**
@@ -67,7 +64,9 @@ public class LogInActivity extends AppCompatActivity {
 
             HashMap<String, String> profileMap = methods.readProfileFromJSONBuffer(buffer);
 
-            mainMenu.putExtra("Profile Data", profileMap.toString());
+            Intent mainMenu = new Intent(this, MainMenuActivity.class);
+            mainMenu.putExtra(constants.BUNDLE_PROFILE, profileMap.toString());
+            startActivity(mainMenu);
         }
         else {
 
@@ -86,7 +85,9 @@ public class LogInActivity extends AppCompatActivity {
                             startActivity(create);
                         }
 
-                    }).create().show();
+                    }).setCancelable(false)
+                        .create()
+                        .show();
         }
     }
 

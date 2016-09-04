@@ -30,6 +30,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
 
     private ArrayList<String> vocabularyUsed;       // Holds the strings of the vocabularies that were used already
     private HashMap<String,String> currentLevel;    // Holds the level data
+    private HashMap<String,String> profileData;
     private ArrayList<String> answersGiven;         // Holds the user answers (from buttons answer1, 2, 3, 4)
     private ArrayList<String> correctAnswersGiven;  // For each answer the user has given, either a true or false will be added to this List depending on if the answer is correct or not; this helps distinguishing true correct answers and wrong answers that are identical to another vocabulary of the same level but are actually not the answer
 
@@ -48,10 +49,11 @@ public class PracticeLevelActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
 
         if (extras != null) {
-            modeId = extras.getInt("modeId");
-            languageId = extras.getInt("languageId");
-            levelId = extras.getInt("levelId");
-            isNewLevel = extras.getBoolean("isNewLevel");
+            modeId = extras.getInt(constants.BUNDLE_MODE_ID);
+            languageId = extras.getInt(constants.BUNDLE_LANGUAGE_ID);
+            levelId = extras.getInt(constants.BUNDLE_LEVEL_ID);
+            isNewLevel = extras.getBoolean(constants.BUNDLE_IS_NEW_LEVEL);
+            profileData = methods.stringToHashMap(extras.getString(constants.BUNDLE_PROFILE));
         }
 
         if (!isNewLevel && extras != null) {
@@ -352,8 +354,12 @@ public class PracticeLevelActivity extends AppCompatActivity {
      */
     public void returnToLevelSelectScreen(View view) {
         Intent levelSelectScreen = new Intent(this, PracticeLevelSelectActivity.class);
-        levelSelectScreen.putExtra("modeId", modeId);
-        levelSelectScreen.putExtra("languageId", languageId);
+        levelSelectScreen.putExtra(constants.BUNDLE_MODE_ID, modeId);
+        levelSelectScreen.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
+        levelSelectScreen.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
+
+        setProfileStats();
+
         startActivity(levelSelectScreen);
     }
 
@@ -404,6 +410,44 @@ public class PracticeLevelActivity extends AppCompatActivity {
         }
         else {
             ret = Boolean.FALSE.toString();
+        }
+        return ret;
+    }
+
+    private void setProfileStats() {
+        String[] keys = {constants.STAT_LEVELS_DONE, constants.STAT_VOCABULARIES_DONE, constants.STAT_CORRECT_VOCABULARIES, constants.STAT_WRONG_VOCABULARIES};
+        String[] newValues = {
+                String.valueOf(((Integer.parseInt(profileData.get(constants.STAT_LEVELS_DONE))) + 1)),
+                String.valueOf(((Integer.parseInt(profileData.get(constants.STAT_VOCABULARIES_DONE))) + correctAnswersGiven.size())),
+                String.valueOf(((Integer.parseInt(profileData.get(constants.STAT_CORRECT_VOCABULARIES))) + countTrue())),
+                String.valueOf(((Integer.parseInt(profileData.get(constants.STAT_WRONG_VOCABULARIES))) + countFalse()))
+
+        };
+        System.out.println(profileData.toString());
+        profileData = methods.editProfileStats(keys, newValues, profileData);
+        System.out.println(profileData.toString());
+    }
+
+    private int countTrue() {
+        int ret = 0;
+
+        for (int i = 0; i < correctAnswersGiven.size(); i++) {
+
+            if (correctAnswersGiven.get(i).equals(Boolean.TRUE.toString())) {
+                ret++;
+            }
+        }
+        return ret;
+    }
+
+    private int countFalse() {
+        int ret = 0;
+
+        for (int i = 0; i < correctAnswersGiven.size(); i++) {
+
+            if (correctAnswersGiven.get(i).equals(Boolean.FALSE.toString())) {
+                ret++;
+            }
         }
         return ret;
     }
@@ -463,10 +507,12 @@ public class PracticeLevelActivity extends AppCompatActivity {
     }
 
     private void initResultScreen() {
+        setProfileStats();
         final Intent results = new Intent(this, PracticeResultScreenActivity.class);
-        results.putExtra("languageId", languageId);
-        results.putExtra("modeId", modeId);
-        results.putExtra("levelId", levelId);
+        results.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
+        results.putExtra(constants.BUNDLE_MODE_ID, modeId);
+        results.putExtra(constants.BUNDLE_LEVEL_ID, levelId);
+        results.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
         results.putExtra("answersGiven", answersGiven);
         results.putExtra("levelData", currentLevel.toString());
         results.putExtra("correctAnswersGiven", correctAnswersGiven);
@@ -481,6 +527,8 @@ public class PracticeLevelActivity extends AppCompatActivity {
                         startActivity(results);
                     }
 
-                }).create().show();
+                }).setCancelable(false)
+                    .create()
+                    .show();
     }
 }

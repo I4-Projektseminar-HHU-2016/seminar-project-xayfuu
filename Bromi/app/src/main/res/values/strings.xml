@@ -7,13 +7,12 @@
     <string name="loading">Loading . . .</string>
     <string name="submit">Submit</string>
     <string name="quit">Quit</string>
-    <string name="ver_info">ver. 0.09</string>
+    <string name="ver_info">ver. 0.10 (alpha)</string>
     <string name="app_name">Bromi</string>
-    <string name="user_name">Trirongone</string>
 
     <!-- Start menu -->
     <string name="sub_app_name">The Language Training App</string>
-    <string name="tap_here">Tap Here to Start!</string>
+    <string name="tap_here">Tap here to start!</string>
     <string name="log_in">Log In</string>
     <string name="create_profile">Create Profile</string>
 
@@ -74,6 +73,19 @@
     <string name="next_level"> </string>
     <string name="level_select"> </string>
     <string name="redo"> </string>
+
+    <!-- Profile -->
+    <string name="profile">Profile</string>
+    <string name="vocabulary_answered_caption">Total vocabularies answered: </string>
+    <string name="levels_played_caption">Total levels played: </string>
+    <string name="wrong_vocabularies_caption">Total vocabularies wrong: </string>
+    <string name="correct_vocabularies_caption">Total vocabularies correct: </string>
+    <string name="vocabulary_answered"> </string>
+    <string name="levels_played"> </string>
+    <string name="wrong_vocabularies"> </string>
+    <string name="correct_vocabularies"> </string>
+    <string name="user_name">Trirongone</string>
+
 
     <!-- Gender Container -->
     <string-array name="gender_array">

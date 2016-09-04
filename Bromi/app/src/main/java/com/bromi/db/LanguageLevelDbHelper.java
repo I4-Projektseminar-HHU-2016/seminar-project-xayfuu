@@ -34,7 +34,7 @@ public class LanguageLevelDbHelper extends SQLiteOpenHelper {
     public static final String COMMA_SEP = ",";
 
     // The SQL command for creating the table "german" with a bunch of columns
-    public static final String SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXIST" + Entries.TABLE_GERMAN + " (" + Entries._ID + " INTEGER PRIMARY KEY" + COMMA_SEP + Entries.COLUMN_LEVEL_ID + INTEGER_TYPE + COMMA_SEP + Entries.COLUMN_QUESTION_TYPE_ID + TEXT_TYPE + COMMA_SEP + Entries.COLUMN_FOREIGN_WORD + TEXT_TYPE + COMMA_SEP + Entries.COLUMN_TRANSLATED_WORD + TEXT_TYPE + ")";
+    public static final String SQL_CREATE_ENTRIES = "CREATE TABLE IF NOT EXISTS " + Entries.TABLE_GERMAN + " (" + Entries._ID + " INTEGER PRIMARY KEY" + COMMA_SEP + Entries.COLUMN_LEVEL_ID + INTEGER_TYPE + COMMA_SEP + Entries.COLUMN_QUESTION_TYPE_ID + TEXT_TYPE + COMMA_SEP + Entries.COLUMN_FOREIGN_WORD + TEXT_TYPE + COMMA_SEP + Entries.COLUMN_TRANSLATED_WORD + TEXT_TYPE + ")";
 
     // Delete command
     public static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS " + Entries.TABLE_GERMAN;

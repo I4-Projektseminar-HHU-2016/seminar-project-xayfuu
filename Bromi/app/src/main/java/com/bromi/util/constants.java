@@ -4,7 +4,27 @@ public class constants {
 
     public static final String PROFILE_DATA_FILENAME = "PROFILE";
 
-    public static final String SINGLE_CHOICE_IDENTIFIER = "SC";
+    // JSON Object names for profile
+    public static final String PROFILE_NAME = "name";
+    public static final String PROFILE_GENDER = "gender";
+    public static final String PROFILE_COUNTRY = "country";
+    public static final String PROFILE_AVATAR = "avatar";
+    public static final String STAT_LEVELS_DONE = "levels_done";
+    public static final String STAT_VOCABULARIES_DONE = "vocabularies_done";
+    public static final String STAT_CORRECT_VOCABULARIES = "correct_vocabularies";
+    public static final String STAT_WRONG_VOCABULARIES = "wrong_vocabularies";
+
+    // Android bundle names
+    public static final String BUNDLE_PROFILE = "profileData";
+    public static final String BUNDLE_MODE_ID = "modeId";
+    public static final String BUNDLE_LEVEL_ID = "levelId";
+    public static final String BUNDLE_LANGUAGE_ID = "languageId";
+    public static final String BUNDLE_IS_NEW_LEVEL = "isNewLevel";
+    public static final String BUNDLE_OPENED_FROM = "openedFrom";
+
+    // Activity IDs used to identify what activity/menu to return to if a quit button is pressed on an activity that can be accesses from multiple instances (e.g. profile)
+    public static final int MAIN_MENU_ID = 0;
+    public static final int PRACTICE_LEVEL_SELECT_ID = 1;
 
     public static final int STRING_SIZE_LIMIT = 3;
     public static final int ANSWER_POSSIBILITY_SIZE = 4;

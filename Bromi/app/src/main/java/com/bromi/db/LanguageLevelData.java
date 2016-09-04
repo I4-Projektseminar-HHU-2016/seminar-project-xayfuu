@@ -12,7 +12,7 @@ public class LanguageLevelData {
             {"sehen", "verstehen", "ja", "gehen", "trinken"},
             {"Straße", "links", "rechts", "das Auto", "Straßenbahn"},
             {"Computer", "Buch", "Schuhe", "schön", "vielleicht"},
-            {"Apfel", "Pause", "kaputt machen", "machen", "Stift"},
+            {"Apfel", "Pause", "kaputt", "machen", "Stift"},
             {"Danke", "Baum", "grün", "Raum", "Wald"}
     };
 
@@ -23,7 +23,7 @@ public class LanguageLevelData {
             {"see", "understand", "yes", "go", "drink"},
             {"street", "left", "right", "car", "tram"},
             {"computer", "book", "shoes", "beautiful", "maybe"},
-            {"apple", "break", "break", "make", "pen"},
+            {"apple", "break", "broken", "make", "pen"},
             {"thanks", "tree", "green", "room", "forest"}
     };
 
@@ -36,6 +36,6 @@ public class LanguageLevelData {
             "please", "spam", "hold", "kill", "step", "stair", "star", "tool", "tip", "death", "until", "about", "as", "graph", "at", "least", "render", "update", "rate", "actually", "reality", "difference",
             "loop", "count", "set", "fast", "number", "serious", "all", "of", "those", "cause", "even", "usually", "but", "notice", "crash", "by", "image", "cancel", "cute", "congratulations", "one", "correct",
             "strength", "too", "to", "hand", "foot", "head", "finger", "whack", "sorry", "apologize", "interrupt", "manage", "almost", "throw", "face", "obviously", "match", "here", "alright", "let", "boy", "girl",
-            "choke", "computer", "book", "shoes", "beautiful", "apple", "break", "pen", "thanks", "tree", "green", "room", "forest"
+            "choke", "computer", "book", "shoes", "beautiful", "apple", "break", "pen", "thanks", "tree", "green", "room", "forest", "broken"
     };
 }

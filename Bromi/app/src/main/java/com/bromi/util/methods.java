@@ -1,8 +1,13 @@
 package com.bromi.util;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.AssetManager;
 import android.widget.Toast;
 
+import com.bromi.Activities.MainMenuActivity;
+import com.bromi.Activities.PracticeLevelActivity;
+import com.bromi.Activities.PracticeLevelSelectActivity;
 import com.bromi.R;
 import com.bromi.db.LanguageLevelData;
 
@@ -10,6 +15,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -32,25 +40,6 @@ public class methods {
     public static void showToast(String message, Context c) {
         Toast toast = Toast.makeText(c, message, Toast.LENGTH_SHORT);
         toast.show();
-    }
-
-    /**
-     * Creates a Profile. Data must be gathered beforehand for this to work.
-     * @param name - the name a user entered
-     * @param country - the country a user entered
-     * @param gender - the gender a user entered
-     * @return the JSONArray
-     * @throws JSONException
-     */
-    public static JSONArray createProfileJSONObject(String name, String country, String gender) throws JSONException {
-        JSONArray data = new JSONArray();
-        JSONObject profile = new JSONObject();
-        profile.put("name", name);
-        profile.put("gender", gender);
-        profile.put("country", country);
-        data.put(profile);
-
-        return data;
     }
 
     /**
@@ -85,6 +74,16 @@ public class methods {
         }
 
         return profileData;
+    }
+
+    // http://stackoverflow.com/questions/19945411/android-java-how-can-i-parse-a-local-json-file-from-assets-folder-into-a-listvi
+    public static String loadJsonFromAssets(Context c) throws IOException {
+        FileInputStream profile = c.openFileInput(constants.PROFILE_DATA_FILENAME);
+        byte[] stringBytes = new byte[profile.available()];
+        profile.read(stringBytes);
+        profile.close();
+
+        return new String(stringBytes, "UTF-8");
     }
 
     /**
@@ -143,6 +142,43 @@ public class methods {
             default:
                 return null;
         }
+    }
+
+    /**
+     * Returns the resource ID of an image
+     * @param img
+     * @return
+     */
+    public static int getImageResourceId(String img) {
+        switch(img) {
+            case ("test_avatar"):
+                return R.drawable.test_avatar;
+            default:
+                return R.drawable.default_avatar;
+
+        }
+    }
+
+    public static Intent getIntentFromId(int id, Context c) {
+        Intent ret;
+        switch(id) {
+            case(constants.PRACTICE_LEVEL_SELECT_ID):
+                ret = new Intent(c, PracticeLevelSelectActivity.class);
+                break;
+            default:
+                ret = new Intent(c, MainMenuActivity.class);
+                break;
+        }
+
+        return ret;
+    }
+
+    public static HashMap<String, String> editProfileStats(String[] keys, String[] newValues, HashMap<String, String> profile) {
+        for (int i = 0; i < keys.length; i++) {
+            profile.put(keys[i], newValues[i]);
+        }
+
+        return profile;
     }
 }
 

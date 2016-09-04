@@ -200,4 +200,31 @@
         android:layout_below="@+id/imageView4"
         android:onClick="returnToLanguageSelect" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/user_name"
+        android:id="@+id/user_name"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/user_avatar_clickable" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/user_avatar_clickable"
+        android:adjustViewBounds="true"
+        android:minHeight="50sp"
+        android:minWidth="50sp"
+        android:maxHeight="50sp"
+        android:maxWidth="50sp"
+        android:layout_marginTop="25dp"
+        android:layout_below="@+id/imageView2"
+        android:src="@drawable/default_avatar"
+        android:layout_centerHorizontal="true"
+        android:clickable="true" />
+
 </RelativeLayout>

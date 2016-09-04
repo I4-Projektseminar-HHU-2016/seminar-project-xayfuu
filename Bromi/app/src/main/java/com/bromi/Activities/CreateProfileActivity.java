@@ -1,5 +1,6 @@
 package com.bromi.Activities;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,6 +20,7 @@ import com.bromi.util.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -121,7 +123,7 @@ public class CreateProfileActivity extends AppCompatActivity {
 
                     if (!hasFocus) {
                         for (String country : countries) {
-                            if (enteredString.equals(country)) {
+                            if (enteredString.toLowerCase().equals(country.toLowerCase())) {
                                 countryIsValid = true;
                             }
                         }
@@ -205,6 +207,7 @@ public class CreateProfileActivity extends AppCompatActivity {
      *     "name": name
      *     "gender": gender
      *     "country": country
+     *     "avatar": default.png
      *   }
      * ]
      *
@@ -212,14 +215,14 @@ public class CreateProfileActivity extends AppCompatActivity {
      * @param country - the country the user entered
      * @param gender - the gender the user gave
      */
-    private void createProfile(String name, String country, String gender) throws IOException, JSONException {
+    private void createProfile(final String name, final String country, final String gender) throws IOException, JSONException {
 
         if (!profileExists()){
 
             FileOutputStream fos = openFileOutput(constants.PROFILE_DATA_FILENAME, Context.MODE_PRIVATE);
 
             // Create JSON
-            JSONArray data = methods.createProfileJSONObject(name, country, gender);
+            JSONArray data = createProfileJSONObject(name, country, gender);
 
             // Write onto device's storage
             fos.write(data.toString().getBytes());
@@ -241,6 +244,9 @@ public class CreateProfileActivity extends AppCompatActivity {
              */
 
             methods.showToast("Profile created!", getBaseContext());
+
+            Intent logIn = new Intent(this, LogInActivity.class);
+            startActivity(logIn);
         }
         else {
 
@@ -255,6 +261,13 @@ public class CreateProfileActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     deleteFile(constants.PROFILE_DATA_FILENAME);    // Delete Profile
                     methods.showToast("Profile deleted.", getApplicationContext());
+
+                    try {
+                        createProfile(name, country, gender);
+                    } catch (IOException | JSONException e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
             }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -262,8 +275,34 @@ public class CreateProfileActivity extends AppCompatActivity {
                 public void onClick(DialogInterface dialogInterface, int i) {
                     //Do Nothing
                 }
-            }).create().show();
+            }).setCancelable(false)
+                    .create()
+                    .show();
         }
+    }
+
+    /**
+     * Creates a Profile. Data must be gathered beforehand for this to work.
+     * @param name - the name a user entered
+     * @param country - the country a user entered
+     * @param gender - the gender a user entered
+     * @return the JSONArray
+     * @throws JSONException
+     */
+    private JSONArray createProfileJSONObject(String name, String country, String gender) throws JSONException {
+        JSONArray data = new JSONArray();
+        JSONObject profile = new JSONObject();
+        profile.put(constants.PROFILE_NAME, name);
+        profile.put(constants.PROFILE_GENDER, gender);
+        profile.put(constants.PROFILE_COUNTRY, country);
+        profile.put(constants.PROFILE_AVATAR, "default_avatar");
+        profile.put(constants.STAT_LEVELS_DONE, 0);
+        profile.put(constants.STAT_VOCABULARIES_DONE, 0);
+        profile.put(constants.STAT_CORRECT_VOCABULARIES, 0);
+        profile.put(constants.STAT_WRONG_VOCABULARIES, 0);
+        data.put(profile);
+
+        return data;
     }
 
     /**
