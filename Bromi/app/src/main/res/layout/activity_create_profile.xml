@@ -27,7 +27,8 @@
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:imeOptions="actionDone" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -47,7 +48,8 @@
         android:layout_below="@+id/textView4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:inputType="text"/>
+        android:inputType="text"
+        android:imeOptions="actionDone"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -65,9 +67,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/genderSpinner"
         android:textSize="20sp"
-        android:text="Choose..."
+        android:text="@string/choose"
         android:layout_alignBottom="@+id/textView5"
         android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
         android:layout_toRightOf="@+id/textView5"
         android:layout_toEndOf="@+id/textView5" />
 
@@ -77,6 +80,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/nextButton"
         android:drawableRight="@drawable/ic_navigate_next_black_24dp"
+        android:drawableEnd="@drawable/ic_navigate_next_black_24dp"
         android:text="@string/submit"
         android:textAllCaps="false"
         android:layout_alignParentBottom="true"

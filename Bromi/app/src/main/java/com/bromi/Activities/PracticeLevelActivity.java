@@ -148,7 +148,6 @@ public class PracticeLevelActivity extends AppCompatActivity {
      */
     private void setVocabularyText(String s) {
         current_vocabulary.setText(s);
-        adjustText(s, current_vocabulary);
     }
 
     /**
@@ -329,19 +328,15 @@ public class PracticeLevelActivity extends AppCompatActivity {
 
             if (i == 0) {
                 answer1.setText(s);
-                adjustText(s, answer1);
             }
             else if (i == 1) {
                 answer2.setText(s);
-                adjustText(s, answer2);
             }
             else if (i == 2) {
                 answer3.setText(s);
-                adjustText(s, answer3);
             }
             else {
                 answer4.setText(s);
-                adjustText(s, answer4);
             }
             i++;
         }
@@ -470,40 +465,6 @@ public class PracticeLevelActivity extends AppCompatActivity {
         answer2.setEnabled(false);
         answer3.setEnabled(false);
         answer4.setEnabled(false);
-    }
-
-    /**
-     * Attempt to automatically adjust text size of certain TextView objects depending on char length of s
-     * @param s
-     * @param tv
-     */
-    private void adjustText(String s, TextView tv) {
-        int newSize;
-
-        if (tv.getId() == current_vocabulary.getId()) {
-            newSize = 60;   // Default
-
-            if (s.length() > 13) {
-                newSize = 45;
-            }
-            else if (s.length() > 18) {
-                newSize = 30;
-            }
-
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, newSize);
-        }
-        else if (tv.getId() == answer1.getId() || tv.getId() == answer2.getId() || tv.getId() == answer3.getId() || tv.getId() == answer4.getId()) {
-            newSize = 20;   // Default
-
-            if (s.length() > 14) {
-                newSize = 15;
-            }
-            else if (s.length() > 19) {
-                newSize = 10;
-            }
-
-            tv.setTextSize(TypedValue.COMPLEX_UNIT_SP, newSize);
-        }
     }
 
     private void initResultScreen() {

@@ -9,6 +9,7 @@
     <string name="quit">Quit</string>
     <string name="ver_info">ver. 0.10 (alpha)</string>
     <string name="app_name">Bromi</string>
+    <string name="next">Next</string>
 
     <!-- Start menu -->
     <string name="sub_app_name">The Language Training App</string>
@@ -25,6 +26,7 @@
     <string name="gender_question">What gender are you?</string>
     <string name="dialog_delete_profile">It was detected that a profile already exists. Do you want to delete it? (All progress and data will be lost.)</string>
     <string name="dialog_create_profile">Could not find Profile. Would you like to create one now?</string>
+    <string name="choose">Choose...</string>
 
     <!-- Main Menu -->
     <string name="practice_button_text">Practice</string>
@@ -76,10 +78,10 @@
 
     <!-- Profile -->
     <string name="profile">Profile</string>
-    <string name="vocabulary_answered_caption">Total vocabularies answered: </string>
-    <string name="levels_played_caption">Total levels played: </string>
-    <string name="wrong_vocabularies_caption">Total vocabularies wrong: </string>
-    <string name="correct_vocabularies_caption">Total vocabularies correct: </string>
+    <string name="vocabulary_answered_caption">Vocabularies Answered: </string>
+    <string name="levels_played_caption">Levels Played: </string>
+    <string name="wrong_vocabularies_caption">Vocabularies Wrong: </string>
+    <string name="correct_vocabularies_caption">Vocabularies Correct: </string>
     <string name="vocabulary_answered"> </string>
     <string name="levels_played"> </string>
     <string name="wrong_vocabularies"> </string>

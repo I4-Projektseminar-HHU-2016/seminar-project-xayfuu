@@ -9,45 +9,42 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.bromi.Activities.MainMenuActivity">
 
-    <!-- Button Background Made with http://angrytools.com/android/button/ -->
     <Button
         android:id="@+id/practice_button"
         android:text="@string/practice_button_text"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        android:layout_width="250dp"
-        android:layout_height="90dp"
+        android:textSize="20sp"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
         android:background="@drawable/main_menu_button_bg"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="140dp"
+        android:layout_marginTop="100dp"
         android:onClick="buttonPractice" />
 
-    <!-- Button Background Made with http://angrytools.com/android/button/ -->
     <Button
         android:id="@+id/endless_button"
         android:text="@string/challenge_button_text"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        android:layout_width="250dp"
-        android:layout_height="90dp"
+        android:textSize="20sp"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
         android:background="@drawable/main_menu_button_bg"
         android:layout_below="@+id/practice_button"
         android:layout_alignLeft="@+id/practice_button"
         android:layout_alignStart="@+id/practice_button"
         android:layout_marginTop="20dp" />
 
-    <!-- Button Background Made with http://angrytools.com/android/button/ -->
     <Button
         android:id="@+id/challenge_button"
         android:text="@string/endless_button_text"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
-        android:textSize="25sp"
-        android:layout_width="250dp"
-        android:layout_height="90dp"
+        android:textSize="20sp"
+        android:layout_width="200dp"
+        android:layout_height="70dp"
         android:background="@drawable/main_menu_button_bg"
         android:layout_below="@+id/endless_button"
         android:layout_alignLeft="@+id/endless_button"
@@ -75,6 +72,7 @@
         android:textSize="15sp"
         android:layout_alignParentBottom="true"
         android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
         android:layout_toRightOf="@+id/bromi_version_look_up"
         android:layout_toEndOf="@+id/bromi_version_look_up" />
 
@@ -85,9 +83,10 @@
         android:text="@string/user_name"
         android:id="@+id/user_name"
         android:textAllCaps="false"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:layout_marginTop="13dp"
         android:layout_marginRight="7dp"
+        android:layout_marginEnd="7dp"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/user_avatar_clickable"
         android:layout_toStartOf="@+id/user_avatar_clickable" />
@@ -97,10 +96,10 @@
         android:layout_height="wrap_content"
         android:id="@+id/user_avatar_clickable"
         android:adjustViewBounds="true"
-        android:minHeight="50sp"
-        android:minWidth="50sp"
-        android:maxHeight="50sp"
-        android:maxWidth="50sp"
+        android:minHeight="35sp"
+        android:minWidth="35sp"
+        android:maxHeight="35sp"
+        android:maxWidth="35sp"
         android:src="@drawable/default_avatar"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
