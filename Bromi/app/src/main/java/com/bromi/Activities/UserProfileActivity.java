@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bromi.Custom.ExperienceBar;
 import com.bromi.R;
 import com.bromi.util.constants;
 import com.bromi.util.methods;
@@ -21,8 +22,9 @@ public class UserProfileActivity extends AppCompatActivity {
     private int modeId;
     private int languageId;
 
-    private TextView userName, vocabulary_answered, levels_played, wrong_vocabularies, correct_vocabularies;
+    private TextView userName, vocabulary_answered, levels_played, wrong_vocabularies, correct_vocabularies, current_exp, user_level;
     private ImageView userAvatar;
+    private ExperienceBar exp_bar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,9 @@ public class UserProfileActivity extends AppCompatActivity {
         levels_played = (TextView) findViewById(R.id.levels_played);
         wrong_vocabularies = (TextView) findViewById(R.id.wrong_vocabularies);
         correct_vocabularies = (TextView) findViewById(R.id.correct_vocabularies);
+        current_exp = (TextView) findViewById(R.id.current_exp);
+        exp_bar = (ExperienceBar) findViewById(R.id.exp_bar);
+        user_level = (TextView) findViewById(R.id.user_level);
 
         userAvatar = (ImageView) findViewById(R.id.user_avatar);
 
@@ -54,6 +59,9 @@ public class UserProfileActivity extends AppCompatActivity {
         setVocabulariesAnswered();
         setCorrectVocabularies();
         setWrongVocabularies();
+        drawXpRectangle();
+        setCurrentExp();
+        setUserLevel();
     }
 
     private void setUserName() {
@@ -107,6 +115,33 @@ public class UserProfileActivity extends AppCompatActivity {
         }
         else {
             wrong_vocabularies.setText("-");
+        }
+    }
+
+    private void drawXpRectangle() {
+        float ratio = (float) Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE))/constants.EXP_REQUIRED_FOR_ONE_LEVEL;
+        float length = ratio * exp_bar.getXpBarLength();
+
+        exp_bar.setXpBarLength(length);
+
+        //System.out.println(length);
+    }
+
+    private void setCurrentExp() {
+        if (profileData != null) {
+            current_exp.setText(profileData.get(constants.STAT_USER_EXPERIENCE));
+        }
+        else {
+            wrong_vocabularies.setText("-");
+        }
+    }
+
+    private void setUserLevel() {
+        if (profileData != null) {
+            user_level.setText(user_level.getText().toString().replace("0", String.valueOf(profileData.get(constants.STAT_USER_LEVEL))));
+        }
+        else {
+            user_level.setText("-");
         }
     }
 

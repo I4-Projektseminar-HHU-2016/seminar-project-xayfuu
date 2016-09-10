@@ -180,5 +180,11 @@ public class methods {
 
         return profile;
     }
+
+    public static HashMap<String, String> editProfileStats(String key, String newValue, HashMap<String, String> profile) {
+        profile.put(key, newValue);
+
+        return profile;
+    }
 }
 

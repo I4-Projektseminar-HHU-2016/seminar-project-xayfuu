@@ -3,7 +3,6 @@ package com.bromi.Activities;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.graphics.Color;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -24,15 +23,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class PracticeResultScreenActivity extends AppCompatActivity {
 
@@ -40,6 +34,8 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
     private int languageId = -1;
     private int levelId = -1;
     private String levelDataString = "";
+
+    private int experienceGained = constants.EXP_FOR_COMPLETING_LEVEL;
 
     private ArrayList<String> answersGiven;
     private ArrayList<String> correctAnswersGiven;
@@ -85,7 +81,7 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
 
         setLevelIndicatorText();
         setSelectedLanguage();
-        showResults();
+        computeAndShowResults();
     }
 
     /**
@@ -109,7 +105,7 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         }
     }
 
-    private void showResults() {
+    private void computeAndShowResults() {
         LinearLayout linLay = (LinearLayout) findViewById(R.id.vocabulary_results_layout);
 
         /**
@@ -136,6 +132,7 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
                 }
             }
             showGrade(correctAmt);
+            computeExperience(correctAmt);
             startVocabularyResultAnimation(linLay, 0);
         }
     }
@@ -164,6 +161,42 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         }
     }
 
+    private void computeExperience(int correctAmt) {
+        experienceGained = experienceGained + (correctAmt * constants.EXP_FOR_CORRECT_ANSWER);
+
+        if (correctAmt == correctAnswersGiven.size()) {
+            experienceGained = experienceGained + constants.EXP_FOR_ALL_CORRECT;
+        }
+
+        exp_gained_text.setText(exp_gained_text.getText().toString().replace("0", String.valueOf(experienceGained)));
+
+        if(exceedsLevelRequirement()) { // Level up
+
+            int xpRemaining = (experienceGained + Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE))) - constants.EXP_REQUIRED_FOR_ONE_LEVEL;
+
+            methods.editProfileStats(constants.STAT_USER_EXPERIENCE, String.valueOf(xpRemaining), profileData);
+            methods.editProfileStats(constants.STAT_USER_LEVEL, String.valueOf((Integer.parseInt(profileData.get(constants.STAT_USER_LEVEL))) + 1), profileData);
+
+            new AlertDialog.Builder(this)
+                    .setMessage("Congratulations, you leveled up!")
+                    .setPositiveButton(">> Press to continue", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+
+                        }
+                    }).setCancelable(false)
+                        .create()
+                        .show();
+        }
+        else {
+            methods.editProfileStats(constants.STAT_USER_EXPERIENCE, String.valueOf((Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE))) + experienceGained), profileData);
+        }
+    }
+
+    private boolean exceedsLevelRequirement() {
+        return (Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE)) + experienceGained) > constants.EXP_REQUIRED_FOR_ONE_LEVEL;
+    }
+
     private void saveProfileToJSON() throws IOException, JSONException {
         String jsonString = methods.loadJsonFromAssets(this.getApplicationContext());
         JSONArray json = new JSONArray(jsonString);
@@ -186,6 +219,7 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         jsonObject.put(constants.STAT_VOCABULARIES_DONE, (Integer.parseInt(profileData.get(constants.STAT_VOCABULARIES_DONE))));
         jsonObject.put(constants.STAT_CORRECT_VOCABULARIES, (Integer.parseInt(profileData.get(constants.STAT_CORRECT_VOCABULARIES))));
         jsonObject.put(constants.STAT_WRONG_VOCABULARIES, (Integer.parseInt(profileData.get(constants.STAT_WRONG_VOCABULARIES))));
+        jsonObject.put(constants.STAT_USER_EXPERIENCE, (Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE))));
 
         json.put(jsonObject);
 
@@ -215,6 +249,12 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
     }
 
     public void redoLevel(View view) {
+        try {
+            saveProfileToJSON();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
         Intent redoLvl = new Intent(this, PracticeLevelActivity.class);
         redoLvl.putExtra(constants.BUNDLE_LEVEL_ID, levelId);
         redoLvl.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
@@ -227,6 +267,12 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
     }
 
     public void nextLevel(View view) {
+        try {
+            saveProfileToJSON();
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+
         int next = levelId + 1;
         final Intent nextLevel = new Intent(this, PracticeLevelActivity.class);
 

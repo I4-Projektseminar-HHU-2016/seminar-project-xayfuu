@@ -53,8 +53,12 @@ App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
             android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.PracticeResultScreenActivity"
-            android:screenOrientation="portrait"></activity>
-        <activity android:name=".Activities.UserProfileActivity"></activity>
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".Activities.UserProfileActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>

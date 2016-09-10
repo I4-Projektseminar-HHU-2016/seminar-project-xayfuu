@@ -13,6 +13,7 @@ What is being presented here is a very simple language training App written in J
 - [x] 8 sets/levels, with a total of 5 single choice translation questions each, try to train your language skills in practice mode. Only German is available currently.
 - [x] The correct answer to a vocabulary is added to a set of wrong answers that are randomized every time you play.
 - [x] View results of a level with a result screen to see if you passed.
+- [x] Track your progress with a simple XP and level up system.
 
 ### Optional/TODO:
 
@@ -23,7 +24,6 @@ These are features that could be added to the game if I decide to take this proj
 - [ ] Level unlock system
 - [ ] Achievements system
 - [ ] More profile statistics
-- [ ] Experience system
 - [ ] A challenge mode
 - [ ] An endless mode
 - [ ] Randomize entire levels daily

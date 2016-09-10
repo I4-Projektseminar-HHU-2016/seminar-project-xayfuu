@@ -71,22 +71,27 @@
     <string name="level_results_text">Level_results_text</string>
     <string name="level_passed">Level Passed!!</string>
     <string name="level_failed">Level Failed..</string>
-    <string name="exp_gained_text">100 EXP gained!!</string>
+    <string name="exp_gained_text">0 EXP gained!!</string>
     <string name="next_level"> </string>
     <string name="level_select"> </string>
     <string name="redo"> </string>
 
     <!-- Profile -->
     <string name="profile">Profile</string>
-    <string name="vocabulary_answered_caption">Vocabularies Answered: </string>
+    <string name="vocabulary_answered_caption">Vocab. Answered: </string>
     <string name="levels_played_caption">Levels Played: </string>
-    <string name="wrong_vocabularies_caption">Vocabularies Wrong: </string>
-    <string name="correct_vocabularies_caption">Vocabularies Correct: </string>
+    <string name="wrong_vocabularies_caption">Vocab. Wrong: </string>
+    <string name="correct_vocabularies_caption">Vocab. Correct: </string>
     <string name="vocabulary_answered"> </string>
     <string name="levels_played"> </string>
     <string name="wrong_vocabularies"> </string>
     <string name="correct_vocabularies"> </string>
     <string name="user_name">Trirongone</string>
+    <string name="user_experience">EXP Gained: </string>
+    <string name="current_exp">1000</string>
+    <string name="user_level">Lvl. 0</string>
+    <string name="level_up_requirement">/500</string>
+    <string name="xp"> EXP</string>
 
 
     <!-- Gender Container -->

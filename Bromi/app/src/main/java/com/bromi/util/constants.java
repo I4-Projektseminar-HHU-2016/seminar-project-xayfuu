@@ -13,6 +13,8 @@ public class constants {
     public static final String STAT_VOCABULARIES_DONE = "vocabularies_done";
     public static final String STAT_CORRECT_VOCABULARIES = "correct_vocabularies";
     public static final String STAT_WRONG_VOCABULARIES = "wrong_vocabularies";
+    public static final String STAT_USER_EXPERIENCE = "experience_points";
+    public static final String STAT_USER_LEVEL = "user_level";
 
     // Android bundle names
     public static final String BUNDLE_PROFILE = "profileData";
@@ -25,6 +27,12 @@ public class constants {
     // Activity IDs used to identify what activity/menu to return to if a quit button is pressed on an activity that can be accesses from multiple instances (e.g. profile)
     public static final int MAIN_MENU_ID = 0;
     public static final int PRACTICE_LEVEL_SELECT_ID = 1;
+
+    // EXP thresholds
+    public static final int EXP_FOR_CORRECT_ANSWER = 10;
+    public static final int EXP_FOR_ALL_CORRECT = 50;
+    public static final int EXP_FOR_COMPLETING_LEVEL = 10;
+    public static final int EXP_REQUIRED_FOR_ONE_LEVEL = 500;
 
     public static final int STRING_SIZE_LIMIT = 3;
     public static final int ANSWER_POSSIBILITY_SIZE = 4;

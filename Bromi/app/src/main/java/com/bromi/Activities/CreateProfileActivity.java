@@ -300,6 +300,8 @@ public class CreateProfileActivity extends AppCompatActivity {
         profile.put(constants.STAT_VOCABULARIES_DONE, 0);
         profile.put(constants.STAT_CORRECT_VOCABULARIES, 0);
         profile.put(constants.STAT_WRONG_VOCABULARIES, 0);
+        profile.put(constants.STAT_USER_EXPERIENCE, 0);
+        profile.put(constants.STAT_USER_LEVEL, 1);
         data.put(profile);
 
         return data;
