@@ -220,6 +220,7 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         jsonObject.put(constants.STAT_CORRECT_VOCABULARIES, (Integer.parseInt(profileData.get(constants.STAT_CORRECT_VOCABULARIES))));
         jsonObject.put(constants.STAT_WRONG_VOCABULARIES, (Integer.parseInt(profileData.get(constants.STAT_WRONG_VOCABULARIES))));
         jsonObject.put(constants.STAT_USER_EXPERIENCE, (Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE))));
+        jsonObject.put(constants.STAT_USER_LEVEL, (Integer.parseInt(profileData.get(constants.STAT_USER_LEVEL))));
 
         json.put(jsonObject);
 

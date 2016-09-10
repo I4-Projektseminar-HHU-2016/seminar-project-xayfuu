@@ -8,7 +8,7 @@ public class LanguageLevelData {
     public static final String[][] levels_german = {
             {"gut", "Essen", "Haus", "ich", "Person"},
             {"Polizei", "denken", "sagen", "der Arzt", "mein"},
-            {"ist", "die Maus", "das Restaurant", "Krankenhaus", "der Name"},
+            {"ist", "Maus", "Restaurant", "Krankenhaus", "Name"},
             {"sehen", "verstehen", "ja", "gehen", "trinken"},
             {"Straße", "links", "rechts", "das Auto", "Straßenbahn"},
             {"Computer", "Buch", "Schuhe", "schön", "vielleicht"},

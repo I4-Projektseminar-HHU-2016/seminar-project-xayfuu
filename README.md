@@ -74,7 +74,7 @@ set JAVA_HOME=C:\jdk1.7.0_75
 #### Running the Code
 
 Once you have installed Android Studio and set it up, you can fork/pull/download the project and open it. Next, click on `Run` in the toolbar of Android Studio (the green arrow). After that, you will be asked to
-set up a virtual machine for the android emulator. Click on `Create New Emulator`. Then from the `Phone` tab, choose `Nexus 5X`, on which the whole project was being emulated. Click on `Next`. Now you have to choose what version
+set up a virtual machine for the android emulator. Click on `Create New Emulator`. Then from the `Phone` tab, choose `3.7" WVGA` (depending on what it is named), on which the whole project was being emulated. Click on `Next`. Now you have to choose what version
 of Android you want to emulate. For this project, choose and download `Marshmallow` with `API Levl 23`, which is Android 6.0. Click on `Next`. All you have to do now is give the VM a name and click on `Finish`.
 Click on `Run` again and choose the emulator you just created. Android Studio will set up the Virtual Machine and start it whenver it's finished. This can take a few minutes.
 
@@ -105,6 +105,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 * Tutorialspoint
 * [Android Button Maker](http://angrytools.com/android/button/)
 * My music playlists on YouTube/SoundCloud
+* A handful of friends for playtesting the App
 
 
 

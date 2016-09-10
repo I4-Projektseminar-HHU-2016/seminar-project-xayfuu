@@ -18,7 +18,7 @@
     <string name="create_profile">Create Profile</string>
 
     <!-- Create Profile -->
-    <string name="create_profile_welcome_text">Welcome to Bromi! Before you get started with the game, you must create a user profile where we will keep track of your process and valuable achievements you have gained throughout your practice!</string>
+    <string name="create_profile_welcome_text">Welcome to Bromi! Before you get started with the game, you must create a user profile where we will keep track of your progress and valuable achievements you have gained throughout your practice!</string>
     <string name="create_profile_welcome_text2">Just answer the following questions and you are good to go! (Note that you can not change the data you have entered afterwards.)</string>
     <string name="create_profile_welcome_text3">If you already have a profile, you can use the following step to delete it and create a new one. Only one profile can be created at a time!</string>
     <string name="name_question">What would you like to be called?</string>
