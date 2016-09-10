@@ -106,4 +106,17 @@
         android:layout_alignParentEnd="true"
         android:clickable="true" />
 
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:id="@+id/return_to_start_screen"
+        android:drawableStart="@drawable/ic_cancel_black_24dp"
+        android:drawableLeft="@drawable/ic_cancel_black_24dp"
+        android:onClick="returnToStartScreen"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

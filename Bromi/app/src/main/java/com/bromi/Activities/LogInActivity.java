@@ -2,14 +2,11 @@ package com.bromi.Activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.os.AsyncTask;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 import com.bromi.R;
-import com.bromi.db.LanguageLevelData;
 import com.bromi.db.LanguageLevelDbHelper;
 import com.bromi.util.*;
 
@@ -28,9 +25,14 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_log_in);
 
-        loadLanguageLevelDb();
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                setContentView(R.layout.activity_log_in);
+                loadLanguageLevelDb();
+            }
+        });
 
         try {
             checkProfile();

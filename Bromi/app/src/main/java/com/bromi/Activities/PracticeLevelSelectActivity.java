@@ -14,8 +14,6 @@ import com.bromi.R;
 import com.bromi.util.constants;
 import com.bromi.util.methods;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 
 public class PracticeLevelSelectActivity extends AppCompatActivity {

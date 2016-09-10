@@ -1,9 +1,6 @@
 package com.bromi.Activities;
 
 import android.content.Intent;
-import android.graphics.Canvas;
-import android.graphics.ColorFilter;
-import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -85,5 +82,13 @@ public class MainMenuActivity extends AppCompatActivity {
         languageSelect.putExtra(constants.BUNDLE_MODE_ID, modeId);
         languageSelect.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
         startActivity(languageSelect);
+    }
+
+    /**
+     * Quit Button method call
+     */
+    public void returnToStartScreen(View view) {
+        Intent startScreen = new Intent(this, StartScreenActivity.class);
+        startActivity(startScreen);
     }
 }

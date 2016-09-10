@@ -2,14 +2,11 @@ package com.bromi.util;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.widget.Toast;
 
 import com.bromi.Activities.MainMenuActivity;
-import com.bromi.Activities.PracticeLevelActivity;
 import com.bromi.Activities.PracticeLevelSelectActivity;
 import com.bromi.R;
-import com.bromi.db.LanguageLevelData;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,7 +14,6 @@ import org.json.JSONObject;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 
