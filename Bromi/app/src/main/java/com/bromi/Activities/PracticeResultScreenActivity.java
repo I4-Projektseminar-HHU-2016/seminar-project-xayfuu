@@ -30,17 +30,59 @@ import java.util.HashMap;
 
 public class PracticeResultScreenActivity extends AppCompatActivity {
 
+    /**
+     * Current mode selected
+     * - set to -1 incase something goes wrong or the ID gets lost
+     */
     private int modeId = -1;
+
+    /**
+     * Current language selected
+     * - set to -1 incase something goes wrong or the ID gets lost
+     */
     private int languageId = -1;
+
+    /**
+     * Current level selected
+     * - set to -1 incase something goes wrong or the ID gets lost
+     */
     private int levelId = -1;
+
+    /**
+     * This String holds the level HashMap of the previous PracticeLevelActivity class retrieved from the db as a string.
+     * - Will be later converted to levelData
+     * - exists to prevent null error when calling methods.stringToHashMap()
+     */
     private String levelDataString = "";
 
+    /**
+     * Experience Gained amount. Will be initiated with the base amount of experience a user gets for simply completing the level.
+     */
     private int experienceGained = constants.EXP_FOR_COMPLETING_LEVEL;
 
+    /**
+     * answersGiven ArrayList retrieved from PracticeLevelActivity.java
+     */
     private ArrayList<String> answersGiven;
+
+    /**
+     * correctAnswersGiven ArrayList retrieved from PracticeLevelActivity.java
+     */
     private ArrayList<String> correctAnswersGiven;
+
+    /**
+     * levelData HashMap retrieved from PracticeLevelActivity.java
+     */
     private HashMap<String, String> levelData;
+
+    /**
+     * Profile Data Map
+     */
     private HashMap<String, String> profileData;
+
+    /**
+     * vocabularyUsed ArrayList retrieved from PracticeLevelActivity.java
+     */
     private ArrayList<String> vocabularyOrder;
 
     private TextView level_indicator_text, selected_language, level_results_text, exp_gained_text;
@@ -105,6 +147,9 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method counts the amount of true's within the correctAnswersGiven ArrayList.
+     */
     private void computeAndShowResults() {
         LinearLayout linLay = (LinearLayout) findViewById(R.id.vocabulary_results_layout);
 
@@ -124,10 +169,10 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
 
                     if (correctAnswersGiven.get(i).equals(Boolean.TRUE.toString())) {
                         correctAmt++;
-                        createVocabularyTextView(i, linLay, "#2fb62f");
+                        createVocabularyTextView(i, linLay, "#2fb62f");     // Generate TextView with green text to imply "this vocabulary is correct"
                     }
                     else {
-                        createVocabularyTextView(i, linLay, "#ff0000");
+                        createVocabularyTextView(i, linLay, "#ff0000");     // Generate TextView with red text ti imply "this vocabulary is incorrect"
                     }
                 }
             }
@@ -137,6 +182,12 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method procedurally adds a new TextView to linLay.
+     * @param itemNum
+     * @param linLay
+     * @param color
+     */
     private void createVocabularyTextView(int itemNum, LinearLayout linLay, String color) {
         TextView tv = new TextView(this);
 
@@ -148,6 +199,11 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         linLay.addView(tv);
     }
 
+    /**
+     * Sets result text according to the user's performance.
+     * - 50% correct answers counts as pass.
+     * @param correctAmt
+     */
     private void showGrade(int correctAmt) {
         if (correctAmt > answersGiven.size()/2) {
             level_results_text.setText("You Passed!!");
@@ -161,22 +217,36 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method computes the EXP a user gains upon completing a level.
+     * @param correctAmt
+     */
     private void computeExperience(int correctAmt) {
+
+        // Gain 10 EXP for each correct vocabulary
         experienceGained = experienceGained + (correctAmt * constants.EXP_FOR_CORRECT_ANSWER);
 
         if (correctAmt == correctAnswersGiven.size()) {
+
+            // Gain 50 EXP if every vocabulary is correct
             experienceGained = experienceGained + constants.EXP_FOR_ALL_CORRECT;
         }
 
         exp_gained_text.setText(exp_gained_text.getText().toString().replace("0", String.valueOf(experienceGained)));
 
-        if(exceedsLevelRequirement()) { // Level up
+        // Check if a level up occurred.
+        if(exceedsLevelRequirement()) {
 
+            // If level up occured, substract the exp needed for a level up from the user's current exp
             int xpRemaining = (experienceGained + Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE))) - constants.EXP_REQUIRED_FOR_ONE_LEVEL;
 
+            // Write remaining exp to user profile map
             methods.editProfileStats(constants.STAT_USER_EXPERIENCE, String.valueOf(xpRemaining), profileData);
+
+            // Increment user level
             methods.editProfileStats(constants.STAT_USER_LEVEL, String.valueOf((Integer.parseInt(profileData.get(constants.STAT_USER_LEVEL))) + 1), profileData);
 
+            // Show a little dialog when level up occurred
             new AlertDialog.Builder(this)
                     .setMessage("Congratulations, you leveled up!")
                     .setPositiveButton(">> Press to continue", new DialogInterface.OnClickListener() {
@@ -188,15 +258,27 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
                         .create()
                         .show();
         }
+
+        // If no level up occurred, simply add the experience gained to the user's current amount of exp
         else {
             methods.editProfileStats(constants.STAT_USER_EXPERIENCE, String.valueOf((Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE))) + experienceGained), profileData);
         }
     }
 
+    /**
+     * This method checks if the level up threshold has been passed.
+     * @return
+     */
     private boolean exceedsLevelRequirement() {
         return (Integer.parseInt(profileData.get(constants.STAT_USER_EXPERIENCE)) + experienceGained) > constants.EXP_REQUIRED_FOR_ONE_LEVEL;
     }
 
+    /**
+     * Saves data stored within the HashMap to the JSON-Profile stored within the phone's internal device so the user's progress doesn't get lost
+     * - TODO: Have more locations where the profile saves instead of just after a level has been completed.
+     * @throws IOException
+     * @throws JSONException
+     */
     private void saveProfileToJSON() throws IOException, JSONException {
         String jsonString = methods.loadJsonFromAssets(this.getApplicationContext());
         JSONArray json = new JSONArray(jsonString);
@@ -229,12 +311,18 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         fos.write(json.toString().getBytes());
         fos.close();
 
+        methods.showToast("Profile saved.", this);
+
     }
 
     /*****************
      * B U T T O N S *
      *****************/
 
+    /**
+     * Return to level select screen
+     * @param view
+     */
     public void returnToLevelSelectScreen(View view) {
         try {
             saveProfileToJSON();
@@ -249,6 +337,10 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         startActivity(levelSelect);
     }
 
+    /**
+     * Redo level
+     * @param view
+     */
     public void redoLevel(View view) {
         try {
             saveProfileToJSON();
@@ -267,6 +359,10 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         startActivity(redoLvl);
     }
 
+    /**
+     * Go to next level
+     * @param view
+     */
     public void nextLevel(View view) {
         try {
             saveProfileToJSON();
@@ -286,13 +382,15 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
             startActivity(nextLevel);
         }
         else {
+
+            // If all levels have been completed and the user is at the end, show a pop up that informs the user
             new AlertDialog.Builder(this)
                     .setMessage("This was the last available level for this language! Do you wish to return to the first level?")
                     .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
-                            nextLevel.putExtra(constants.BUNDLE_LEVEL_ID, 0);
+                            nextLevel.putExtra(constants.BUNDLE_LEVEL_ID, 0);   // Start first level again if user presses yes
                             nextLevel.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
                             nextLevel.putExtra(constants.BUNDLE_MODE_ID, modeId);
                             nextLevel.putExtra(constants.BUNDLE_IS_NEW_LEVEL, true);

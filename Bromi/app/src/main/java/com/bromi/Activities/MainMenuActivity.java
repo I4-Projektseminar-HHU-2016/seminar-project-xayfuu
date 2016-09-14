@@ -15,8 +15,19 @@ import java.util.HashMap;
 
 public class MainMenuActivity extends AppCompatActivity {
 
+    /**
+     * Profile Data Map
+     */
     private HashMap<String, String> profileData;
+
+    /**
+     * ImageView object of the userAvatar
+     */
     private ImageView userAvatar;
+
+    /**
+     * TextView object of the userName
+     */
     private TextView userName;
 
     @Override
@@ -24,7 +35,7 @@ public class MainMenuActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_menu);
 
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();    // receive bundle from previous activity
         if (extras != null) {
             profileData = methods.stringToHashMap(extras.getString(constants.BUNDLE_PROFILE));
         }
@@ -37,6 +48,9 @@ public class MainMenuActivity extends AppCompatActivity {
         setUserAvatar();
     }
 
+    /**
+     * Set text of userName TextView object to the username stored within profile map
+     */
     private void setUserName() {
         if (profileData != null) {
             userName.setText(profileData.get(constants.PROFILE_NAME));
@@ -46,6 +60,9 @@ public class MainMenuActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set avatar of userAvatar ImageView object to the username stored within profile map (only one working avatar at the moment)
+     */
     private void setUserAvatar() {
         if (profileData != null) {
             userAvatar.setImageResource(methods.getImageResourceId(profileData.get(constants.PROFILE_AVATAR)));
@@ -55,6 +72,10 @@ public class MainMenuActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set up clickListeners for userName and userAvatar so they act as a button
+     * - opens userprofile if onClick() is invoked
+     */
     private void initProfileClickListeners() {
         final Intent profile = new Intent(this, UserProfileActivity.class);
         profile.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
@@ -75,6 +96,11 @@ public class MainMenuActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Button callback for "Practice"-button
+     * TODO: Challenge and Endless buttons
+     * @param view
+     */
     public void buttonPractice(View view) {
         int modeId = constants.PRACTICE_MODE_ID;
 
@@ -85,7 +111,7 @@ public class MainMenuActivity extends AppCompatActivity {
     }
 
     /**
-     * Quit Button method call
+     * Quit Button method call; returns to startScreen
      */
     public void returnToStartScreen(View view) {
         Intent startScreen = new Intent(this, StartScreenActivity.class);

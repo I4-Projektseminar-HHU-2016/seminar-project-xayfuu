@@ -27,13 +27,34 @@ import java.io.IOException;
 
 public class CreateProfileActivity extends AppCompatActivity {
 
+    /**
+     * Stores the name the user gave
+     */
     private EditText name;
+
+    /**
+     * Stores the country the user gave
+     */
     private AutoCompleteTextView countryEdit;
+
+    /**
+     * DropDown menu for gender question
+     */
     private Spinner genderSpinner;
 
+    /**
+     * String Array of all countries available in strings.xml
+     */
     private String[] countries;
 
+    /**
+     * Boolean to ensure name entered is valid or not
+     */
     private boolean nameIsValid = false;
+
+    /**
+     * Boolean to ensure country entered is valid or not
+     */
     private boolean countryIsValid = false;
 
     @Override
@@ -164,12 +185,14 @@ public class CreateProfileActivity extends AppCompatActivity {
 
     /**
      * Submit Button method call
+     * - gets every string the user entered within the textViews
      */
     public void submitProfileData(View view) {
         String nameValue = name.getText().toString();
         String countryValue = countryEdit.getText().toString();
         String genderValue = genderSpinner.getSelectedItem().toString();
 
+        // clear focuses of textViews to force TextWatchers to invoke afterTextChanged() methods
         name.clearFocus();
         countryEdit.clearFocus();
 
@@ -207,6 +230,7 @@ public class CreateProfileActivity extends AppCompatActivity {
      *     "gender": gender
      *     "country": country
      *     "avatar": default.png
+     *     ...
      *   }
      * ]
      *
@@ -281,7 +305,7 @@ public class CreateProfileActivity extends AppCompatActivity {
     }
 
     /**
-     * Creates a Profile. Data must be gathered beforehand for this to work.
+     * Creates the JSON Profile object used for the entire app.
      * @param name - the name a user entered
      * @param country - the country a user entered
      * @param gender - the gender a user entered

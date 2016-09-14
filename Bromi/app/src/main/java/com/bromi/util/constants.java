@@ -2,6 +2,7 @@ package com.bromi.util;
 
 public class constants {
 
+    // JSON profile data filename on device's storage
     public static final String PROFILE_DATA_FILENAME = "PROFILE";
 
     // JSON Object names for profile
@@ -28,19 +29,18 @@ public class constants {
     public static final int MAIN_MENU_ID = 0;
     public static final int PRACTICE_LEVEL_SELECT_ID = 1;
 
-    // EXP thresholds
+    // EXP thresholds and values
     public static final int EXP_FOR_CORRECT_ANSWER = 10;
     public static final int EXP_FOR_ALL_CORRECT = 50;
     public static final int EXP_FOR_COMPLETING_LEVEL = 10;
     public static final int EXP_REQUIRED_FOR_ONE_LEVEL = 500;
 
-    public static final int STRING_SIZE_LIMIT = 3;
-    public static final int ANSWER_POSSIBILITY_SIZE = 4;
-
+    // Mode IDs
     public static final int PRACTICE_MODE_ID = 0;
     public static final int CHALLENGE_MODE_ID = 1;
     public static final int ENDLESS_MODE_ID = 2;
 
+    // Language IDs
     public static final int LANGUAGE_ID_ENGLISH = 0;
     public static final int LANGUAGE_ID_GERMAN = 1;
     public static final int LANGUAGE_ID_TURKISH = 2;
@@ -51,4 +51,8 @@ public class constants {
     public static final int LANGUAGE_ID_JAPANESE = 7;
     public static final int LANGUAGE_ID_KOREAN = 8;
     public static final int LANGUAGE_ID_RUSSIAN = 9;
+
+    // Other IDs
+    public static final int STRING_SIZE_LIMIT = 3;
+    public static final int ANSWER_POSSIBILITY_SIZE = 4;
 }

@@ -8,14 +8,9 @@ import com.bromi.Activities.MainMenuActivity;
 import com.bromi.Activities.PracticeLevelSelectActivity;
 import com.bromi.R;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class methods {
 
@@ -36,40 +31,6 @@ public class methods {
     public static void showToast(String message, Context c) {
         Toast toast = Toast.makeText(c, message, Toast.LENGTH_SHORT);
         toast.show();
-    }
-
-    /**
-     * Reads a Profile from a JSON Buffered String
-     * @param buffered - the String created upon reading a JSON String from the device's internal storage beforehand
-     * @return a HashMap with all elements of the JSONObject as key;value pairs
-     * @throws JSONException
-     */
-    public static HashMap<String, String> readProfileFromJSONBuffer(StringBuilder buffered) throws JSONException {
-
-        // http://stackoverflow.com/questions/4307118/jsonarray-to-hashmap
-        JSONArray readData = new JSONArray(buffered.toString());
-        HashMap<String, String> profileData = new HashMap<>();
-
-        for (int i = 0; i < readData.length(); i++) {
-            JSONObject toPut = readData.optJSONObject(i);
-            Iterator iter = toPut.keys();
-
-            while (iter.hasNext()) {
-                String key = iter.next().toString();
-                profileData.put(key, toPut.getString(key));
-            }
-
-            /**
-             System.out.println(profileData);
-             System.out.println(profileData.size());
-             System.out.println(profileData.get("name"));
-             System.out.println(profileData.get("gender"));
-             System.out.println(profileData.get("country"));
-             **/
-
-        }
-
-        return profileData;
     }
 
     // http://stackoverflow.com/questions/19945411/android-java-how-can-i-parse-a-local-json-file-from-assets-folder-into-a-listvi
@@ -155,6 +116,13 @@ public class methods {
         }
     }
 
+    /**
+     * Used to create an Intent based on the ID that has been given
+     * (See constants.java:
+     *      public static final int MAIN_MENU_ID = 0;
+     *      public static final int PRACTICE_LEVEL_SELECT_ID = 1;
+     *      )
+     */
     public static Intent getIntentFromId(int id, Context c) {
         Intent ret;
         switch(id) {
@@ -169,6 +137,9 @@ public class methods {
         return ret;
     }
 
+    /**
+     * Edits a HashMap with an array of keys and values (where both must be ordered to complement each other accordingly)
+     */
     public static HashMap<String, String> editProfileStats(String[] keys, String[] newValues, HashMap<String, String> profile) {
         for (int i = 0; i < keys.length; i++) {
             profile.put(keys[i], newValues[i]);
@@ -177,6 +148,9 @@ public class methods {
         return profile;
     }
 
+    /**
+     * Edits a single element of a HashMap
+     */
     public static HashMap<String, String> editProfileStats(String key, String newValue, HashMap<String, String> profile) {
         profile.put(key, newValue);
 

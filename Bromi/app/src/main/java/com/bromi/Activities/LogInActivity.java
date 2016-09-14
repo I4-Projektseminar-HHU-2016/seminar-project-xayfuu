@@ -10,12 +10,15 @@ import com.bromi.R;
 import com.bromi.db.LanguageLevelDbHelper;
 import com.bromi.util.*;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 
 
 public class LogInActivity extends AppCompatActivity {
@@ -53,7 +56,7 @@ public class LogInActivity extends AppCompatActivity {
 
         if (profileExists()) {
 
-            FileInputStream fis = openFileInput(constants.PROFILE_DATA_FILENAME);
+            FileInputStream fis = openFileInput(constants.PROFILE_DATA_FILENAME);   // read from the internal storage
             BufferedInputStream bis = new BufferedInputStream(fis);
             StringBuilder buffer = new StringBuilder();
 
@@ -64,7 +67,7 @@ public class LogInActivity extends AppCompatActivity {
             fis.close();
             bis.close();
 
-            HashMap<String, String> profileMap = methods.readProfileFromJSONBuffer(buffer);
+            HashMap<String, String> profileMap = readProfileFromJSONBuffer(buffer);
 
             Intent mainMenu = new Intent(this, MainMenuActivity.class);
             mainMenu.putExtra(constants.BUNDLE_PROFILE, profileMap.toString());
@@ -93,6 +96,43 @@ public class LogInActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Reads a Profile from a JSON Buffered String
+     * @param buffered - the String created upon reading a JSON String from the device's internal storage beforehand
+     * @return a HashMap with all elements of the JSONObject as key;value pairs
+     * @throws JSONException
+     */
+    public HashMap<String, String> readProfileFromJSONBuffer(StringBuilder buffered) throws JSONException {
+
+        // http://stackoverflow.com/questions/4307118/jsonarray-to-hashmap
+        JSONArray readData = new JSONArray(buffered.toString());
+        HashMap<String, String> profileData = new HashMap<>();
+
+        for (int i = 0; i < readData.length(); i++) {
+            JSONObject toPut = readData.optJSONObject(i);
+            Iterator iter = toPut.keys();
+
+            while (iter.hasNext()) {
+                String key = iter.next().toString();
+                profileData.put(key, toPut.getString(key));
+            }
+
+            /**     Tests
+             System.out.println(profileData);
+             System.out.println(profileData.size());
+             System.out.println(profileData.get("name"));
+             System.out.println(profileData.get("gender"));
+             System.out.println(profileData.get("country"));
+             **/
+
+        }
+
+        return profileData;
+    }
+
+    /**
+     * Initiate level database
+     */
     private void loadLanguageLevelDb() {
         langDb = new LanguageLevelDbHelper(this);
         langDb.insertLevelData();

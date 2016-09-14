@@ -18,13 +18,34 @@ import java.util.HashMap;
 
 public class PracticeLevelSelectActivity extends AppCompatActivity {
 
+    /**
+     * Current mode selected
+     */
     private int modeId;
+
+    /**
+     * Current language selected
+     */
     private int languageId;
+
+    /**
+     * Current level selected
+     */
     private int levelId;
 
+    /**
+     * Holds the profile data
+     */
     private HashMap<String, String> profileData;
 
+    /**
+     * ImageView object of the userAvatar
+     */
     private ImageView userAvatar;
+
+    /**
+     * TextView objects used in this activity
+     */
     private TextView userName, language_view;
 
     @Override
@@ -32,7 +53,7 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_level_select);
 
-        Bundle extras = getIntent().getExtras();
+        Bundle extras = getIntent().getExtras();    // receive Bundle from previous activity
         if (extras != null) {
             modeId = extras.getInt(constants.BUNDLE_MODE_ID);
             languageId = extras.getInt(constants.BUNDLE_LANGUAGE_ID);
@@ -49,6 +70,9 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         setUserAvatar();
     }
 
+    /**
+     * Set text of userName TextView object to the username stored within profile map
+     */
     private void setUserName() {
         if (profileData != null) {
             userName.setText(profileData.get(constants.PROFILE_NAME));
@@ -58,6 +82,9 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set avatar of userAvatar ImageView object to the username stored within profile map (only one working avatar at the moment)
+     */
     private void setUserAvatar() {
         if (profileData != null) {
             userAvatar.setImageResource(methods.getImageResourceId(profileData.get(constants.PROFILE_AVATAR)));
@@ -67,6 +94,10 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Set up clickListeners for userName and userAvatar so they act as a button
+     * - opens userprofile if onClick() is invoked
+     */
     private void initProfileClickListeners() {
         final Intent profile = new Intent(this, UserProfileActivity.class);
         profile.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
@@ -89,6 +120,9 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Set language view to show the language that was selected
+     */
     private void setLanguageStringOnTextView() {
         String lang = methods.getLanguageFromId(languageId, this);
 
@@ -100,6 +134,11 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Small animation when a level has been selected.
+     * - Initiates level gameplay when animation is done
+     * @param b
+     */
     private void levelTransition(final Button b) {
         final Animation fade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slow_fade_out);
         final Intent practiceLevel = new Intent(this, PracticeLevelActivity.class);
@@ -129,6 +168,11 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Called when any level has been clicked.
+     * - Identifies the level that was clicked by it's viewID in the android ressources and instantiates levelId
+     * @param view
+     */
     public void startLevelClicked(View view) {
         Button b = (Button) findViewById(view.getId());
         switch (view.getId()) {
@@ -182,6 +226,10 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Quit-Button method to return to language select
+     * @param view
+     */
     public void returnToLanguageSelect(View view) {
         Intent lvlSelect = new Intent(this, LanguageSelectActivity.class);
         lvlSelect.putExtra(constants.BUNDLE_MODE_ID, modeId);

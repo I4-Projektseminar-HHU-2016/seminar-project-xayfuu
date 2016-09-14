@@ -21,24 +21,90 @@ import java.util.Random;
 
 public class PracticeLevelActivity extends AppCompatActivity {
 
-    private int modeId = -1;                 // Current mode selected
-    private int languageId = -1;             // Current language selected
-    private int levelId = -1;                // Current level selected
-    private int vocabularyTotalCount;   // Total vocabularies (equal to level_size)
-    private int vocabularyUsedCount;    // Incremented value that keeps track of how many vocabularies have been tested (Level progression counter)
+    /**
+     * Current mode selected
+     * - set to -1 incase something goes wrong or the ID gets lost
+     */
+    private int modeId = -1;
 
-    private ArrayList<String> vocabularyUsed;       // Holds the strings of the vocabularies that were used already
-    private HashMap<String,String> currentLevel;    // Holds the level data
+    /**
+     * Current language selected
+     * - set to -1 incase something goes wrong or the ID gets lost
+     */
+    private int languageId = -1;
+
+    /**
+     * Current level selected
+     * - set to -1 incase something goes wrong or the ID gets lost
+     */
+    private int levelId = -1;
+
+    /**
+     * Total amount of vocabularies used in level (equals a level size counter)
+     */
+    private int vocabularyTotalCount;
+
+    /**
+     * Integer that keeps track of how many vocabularies have been used so far in the level (equals a level progression counter)
+     * - this value is incremented by 1 everytime a vocabulary has been successfully tested within the runLevel() method
+     */
+    private int vocabularyUsedCount;
+
+    /**
+     * Holds the strings of all vocabularies that were used already. This is used for the randomizing method getVocabulary(), so that no
+     * duplicates are used.
+     */
+    private ArrayList<String> vocabularyUsed;
+
+    /**
+     * Holds the level data gotten from the level database.
+     * - pair structure:
+     * -
+     * -            foreign_word : correct_answer
+     * -                key      :    value
+     */
+    private HashMap<String,String> currentLevel;
+
+    /**
+     * Holds the profile data
+     */
     private HashMap<String,String> profileData;
-    private ArrayList<String> answersGiven;         // Holds the user answers (from buttons answer1, 2, 3, 4)
-    private ArrayList<String> correctAnswersGiven;  // For each answer the user has given, either a true or false will be added to this List depending on if the answer is correct or not; this helps distinguishing true correct answers and wrong answers that are identical to another vocabulary of the same level but are actually not the answer
 
+    /**
+     * Holds the answers given by the users.
+     * - Literally holds the words retrieved from the answer buttons the user has pressed
+     */
+    private ArrayList<String> answersGiven;
+
+    /**
+     * For each answer the user has given, compareAnswers() will add a boolean string "true" or "false" to this AL depending on wether the answer is correct or not.
+     * - This is to help distinguish true correct answers and wrong answers
+     *
+     * TODO: Merge answersGiven and correctAnswersGiven into a Map, where the key is the answer given as a word and the value the boolean value that says whether the key is the answer or not
+     */
+    private ArrayList<String> correctAnswersGiven;
+
+    /**
+     * This boolean describes two game conditions that need to be distinguished between in this entire class.
+     * - If isNewLevel is true, then that means a level has been initiated without any previously given data.
+     * - If isNewLevel is false, then that means the level has been restarted from the resultScreenActivity (via the redoLevel() method) and must retrieve the data used in the level before
+     */
     private boolean isNewLevel = true;
 
-    private TextView level_indicator_text, level_progress_indicator, selected_language, current_vocabulary;     // Textviews from level layout
-    private Button answer1, answer2, answer3, answer4;                                                          // Answer buttons
+    /**
+     * All TextView objects used in this activity
+     */
+    private TextView level_indicator_text, level_progress_indicator, selected_language, current_vocabulary;
 
-    private LanguageLevelDbHelper langDb;   // Level DB Adapter
+    /**
+     * The answer buttons used in this activity
+     */
+    private Button answer1, answer2, answer3, answer4;
+
+    /**
+     * DB object to enable interaction with the App's SQLite DB
+     */
+    private LanguageLevelDbHelper langDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,12 +121,15 @@ public class PracticeLevelActivity extends AppCompatActivity {
             profileData = methods.stringToHashMap(extras.getString(constants.BUNDLE_PROFILE));
         }
 
+        // If level has been restarted, retrieve used data from resultScreenActivity.java
         if (!isNewLevel && extras != null) {
             vocabularyUsed = extras.getStringArrayList("vocabularyUsed");
             currentLevel = methods.stringToHashMap(extras.getString("currentLevel"));
             vocabularyTotalCount = currentLevel.size();
 
         }
+
+        // If level is completely new, instantiate normally
         else {
             vocabularyUsed = new ArrayList<>();
             langDb = new LanguageLevelDbHelper(getApplicationContext());
@@ -93,7 +162,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
     }
 
     /**
-     * Load level data from levelId from databank
+     * Load level data for the levelId from the DB
      */
     private void loadLevelData() {
         if (levelId != 42 && levelId != -1) {
@@ -101,7 +170,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
             vocabularyTotalCount = currentLevel.size();
         }
 
-        /**
+        /**     Tests
         System.out.println("Level read: " + levelId);
         System.out.println("Level data: " + currentLevel.toString());
         System.out.println("Level size: " + vocabularyTotalCount);
@@ -162,6 +231,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
 
             if (isNewLevel) {
 
+                // If level is started without any previously given data, generate vocabulary
                 String newVocabulary = getVocabulary();
                 // System.out.println("Vocabulary generated: " + newVocabulary);
 
@@ -209,6 +279,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
 
                 if (vocabularyUsedCount != vocabularyTotalCount) {
 
+                    // If level is restarted, simply get the vocabulary from the vocabularyUsed AL
                     String nextVocabulary = vocabularyUsed.get(vocabularyUsedCount);
 
                     setVocabularyText(nextVocabulary);
@@ -276,7 +347,6 @@ public class PracticeLevelActivity extends AppCompatActivity {
      * - random order of vocabularies
      * - keeps track of which vocabularies were used already thanks to vocabularyUsed arraylist and is called recursively accordingly if this case occurs inside runLevel() implicitly
      * - returns "" as a sort of null-string if either all vocabularies were used already or some other problem occurs (problem is caught in runLevel() implicitly by simply calling runLevel() recursively)
-     * - quasi-level-manager so to speak
      * @return
      */
     // http://stackoverflow.com/questions/929554/is-there-a-way-to-get-the-value-of-a-hashmap-randomly-in-java
@@ -343,7 +413,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
     }
 
     /**
-     * Quit button
+     * Quit button, returns to level select
      * @param view
      */
     public void returnToLevelSelectScreen(View view) {
@@ -362,6 +432,8 @@ public class PracticeLevelActivity extends AppCompatActivity {
      * - all buttons are disabled immediately if this is called to prevent spam clicking a button and retrieving undesired data, which will lead to a crash
      * - buttons are reenabled in setAnswerText(), i.e. when everything that must be processed by the program is done
      * - adds answer to answersGiven
+     * - invokes compareAnswers()
+     * - runs next vocabulary by calling runLevel()
      * @param view
      */
     public void submitAnswer(View view) {
@@ -408,6 +480,9 @@ public class PracticeLevelActivity extends AppCompatActivity {
         return ret;
     }
 
+    /**
+     * Saves profile statistics gained by playing the level (no matter up to what point) to profile hashmap
+     */
     private void setProfileStats() {
         String[] keys = {constants.STAT_LEVELS_DONE, constants.STAT_VOCABULARIES_DONE, constants.STAT_CORRECT_VOCABULARIES, constants.STAT_WRONG_VOCABULARIES};
         String[] newValues = {
@@ -422,6 +497,10 @@ public class PracticeLevelActivity extends AppCompatActivity {
         System.out.println(profileData.toString());
     }
 
+    /**
+     * Counts correctly answered vocabulary
+     * @return amount gathered from correctAnsersGiven
+     */
     private int countTrue() {
         int ret = 0;
 
@@ -434,6 +513,10 @@ public class PracticeLevelActivity extends AppCompatActivity {
         return ret;
     }
 
+    /**
+     * Counts wrongly answered vocabulary
+     * @return amount gathered from correctAnsersGiven
+     */
     private int countFalse() {
         int ret = 0;
 
@@ -466,6 +549,9 @@ public class PracticeLevelActivity extends AppCompatActivity {
         answer4.setEnabled(false);
     }
 
+    /**
+     * Called when player has finished level. Puts every bit of data gained throughout the play of this level into the Bundle and starts the results screen activity
+     */
     private void initResultScreen() {
         setProfileStats();
         final Intent results = new Intent(this, PracticeResultScreenActivity.class);
@@ -478,6 +564,9 @@ public class PracticeLevelActivity extends AppCompatActivity {
         results.putExtra("correctAnswersGiven", correctAnswersGiven);
         results.putExtra("vocabularyUsed", vocabularyUsed);
 
+        /**
+         * Pop up to stop the level and force the player to go to the level screen
+         */
         new AlertDialog.Builder(this)
                 .setMessage("Level Complete!")
                 .setPositiveButton("Get Your Results ->", new DialogInterface.OnClickListener() {

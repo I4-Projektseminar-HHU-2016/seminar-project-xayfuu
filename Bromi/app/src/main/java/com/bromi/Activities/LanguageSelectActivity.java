@@ -10,10 +10,19 @@ import com.bromi.util.*;
 
 public class LanguageSelectActivity extends AppCompatActivity {
 
+    /**
+     * Mode identifier
+     * (from ../util/constants.java:
+     *      public static final int PRACTICE_MODE_ID = 0;
+     *      public static final int CHALLENGE_MODE_ID = 1;
+     *      public static final int ENDLESS_MODE_ID = 2;
+     *      )
+     */
     private int modeId;
-    private Intent initNextActivity;
-    private int languageId = -1;
 
+    /**
+     * Profile data (Saved as String in this case, since we don't need a HashMapped profile for this class)
+     */
     private String profileData;
 
     @Override
@@ -21,16 +30,22 @@ public class LanguageSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language_select);
 
-        Bundle b = getIntent().getExtras();
+        Bundle b = getIntent().getExtras();     // recieve bundled data from previous activity
+
         if (b!=null) {
             modeId = b.getInt(constants.BUNDLE_MODE_ID);
             profileData = b.getString(constants.BUNDLE_PROFILE);
         }
     }
 
+    /**
+     * Provisionary method for the only working language at the moment. Initiates next activity and initializes languageID
+     * TODO: do a switch-case sort of thing for languageID if all languages were to be used at any point in the future
+     */
     public void buttonGerman(View view) {
-        languageId = constants.LANGUAGE_ID_GERMAN;
+        int languageId = constants.LANGUAGE_ID_GERMAN;
 
+        Intent initNextActivity;
         if (modeId == constants.PRACTICE_MODE_ID) {
             initNextActivity = new Intent(this, PracticeLevelSelectActivity.class);
             initNextActivity
@@ -53,6 +68,10 @@ public class LanguageSelectActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Returns to the main menu
+     * @param view
+     */
     public void returnToMainMenu(View view) {
         Intent mainMenu = new Intent(this, MainMenuActivity.class);
         mainMenu.putExtra(constants.BUNDLE_PROFILE, profileData);
