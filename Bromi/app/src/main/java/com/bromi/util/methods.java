@@ -4,8 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.Toast;
 
-import com.bromi.Activities.MainMenuActivity;
-import com.bromi.Activities.PracticeLevelSelectActivity;
+import com.bromi.activities.menus.MainMenuActivity;
+import com.bromi.activities.menus.PracticeLevelSelectActivity;
 import com.bromi.R;
 
 import java.io.FileInputStream;
@@ -61,6 +61,7 @@ public class methods {
                     String[] entry = pair.split("=");
                     ret.put(entry[0].trim(), entry[1].trim());
                 }
+
                 return ret;
             }
         }
@@ -78,24 +79,34 @@ public class methods {
         switch(id) {
             case(constants.LANGUAGE_ID_GERMAN):
                 return " " + c.getResources().getString(R.string.GER);
+
             case(constants.LANGUAGE_ID_TURKISH):
                 return " " + c.getResources().getString(R.string.TRK);
+
             case(constants.LANGUAGE_ID_FRENCH):
                 return " " + c.getResources().getString(R.string.FR);
+
             case(constants.LANGUAGE_ID_SPANISH):
                 return " " + c.getResources().getString(R.string.SPN);
+
             case(constants.LANGUAGE_ID_CHINESE_SIMPLIFIED):
                 return " " + c.getResources().getString(R.string.CHNs);
+
             case(constants.LANGUAGE_ID_CHINESE_TRADITIONAL):
                 return " " + c.getResources().getString(R.string.CHNt);
+
             case(constants.LANGUAGE_ID_JAPANESE):
                 return " " + c.getResources().getString(R.string.JPN);
+
             case(constants.LANGUAGE_ID_KOREAN):
                 return " " + c.getResources().getString(R.string.KOR);
+
             case(constants.LANGUAGE_ID_ENGLISH):
                 return " " + c.getResources().getString(R.string.ENG);
+
             case(constants.LANGUAGE_ID_RUSSIAN):
                 return " " + c.getResources().getString(R.string.RUS);
+
             default:
                 return null;
         }
@@ -129,6 +140,7 @@ public class methods {
             case(constants.PRACTICE_LEVEL_SELECT_ID):
                 ret = new Intent(c, PracticeLevelSelectActivity.class);
                 break;
+
             default:
                 ret = new Intent(c, MainMenuActivity.class);
                 break;

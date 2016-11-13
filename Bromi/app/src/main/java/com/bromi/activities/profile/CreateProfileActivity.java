@@ -1,6 +1,5 @@
-package com.bromi.Activities;
+package com.bromi.activities.profile;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AlertDialog;
@@ -14,14 +13,15 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.bromi.activities.LogInActivity;
+import com.bromi.activities.menus.StartScreenActivity;
 import com.bromi.R;
+import com.bromi.audio.BackgroundMusic;
+import com.bromi.lib.ProfileManager;
 import com.bromi.util.*;
 
-import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 
@@ -57,22 +57,41 @@ public class CreateProfileActivity extends AppCompatActivity {
      */
     private boolean countryIsValid = false;
 
+    /**
+     * Make this value >true< to skip profile creation for development/test purposes
+     */
+    public static boolean dummyProfile = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_create_profile);
 
-        name = (EditText) findViewById(R.id.editName);
-        countryEdit = (AutoCompleteTextView) findViewById(R.id.autocomplete_country);
-        genderSpinner = (Spinner) findViewById(R.id.genderSpinner);
+        if (!dummyProfile) {
+            setContentView(R.layout.activity_create_profile);
 
-        countries = getResources().getStringArray(R.array.countries_array);
+            BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
 
-        name.addTextChangedListener(nameWatcher);
-        countryEdit.addTextChangedListener(countryWatcher);
+            name = (EditText) findViewById(R.id.editName);
+            countryEdit = (AutoCompleteTextView) findViewById(R.id.autocomplete_country);
+            genderSpinner = (Spinner) findViewById(R.id.genderSpinner);
 
-        initAutoCountryAdapter();
-        initGenderSpinnerAdapter();
+            countries = getResources().getStringArray(R.array.countries_array);
+
+            name.addTextChangedListener(nameWatcher);
+            countryEdit.addTextChangedListener(countryWatcher);
+
+            initAutoCountryAdapter();
+            initGenderSpinnerAdapter();
+        }
+        else {
+            try {
+                ProfileManager.createProfile("Dummy", "Germany", "Male", getApplicationContext());
+                initLogIn();
+            }
+            catch (IOException | JSONException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
@@ -104,10 +123,13 @@ public class CreateProfileActivity extends AppCompatActivity {
                 public void onFocusChange(View view, boolean hasFocus) {
 
                     if (!hasFocus) {
+
                         if (methods.isEmpty(enteredString) && enteredString.length() < constants.STRING_SIZE_LIMIT) {
                             methods.showToast("Please make sure your name is at least 3 symbols long!", getApplicationContext());
                         }
-                        else { nameIsValid = true; }
+                        else {
+                            nameIsValid = true;
+                        }
                     }
                 }
             });
@@ -142,7 +164,9 @@ public class CreateProfileActivity extends AppCompatActivity {
                 public void onFocusChange(View view, boolean hasFocus) {
 
                     if (!hasFocus) {
+
                         for (String country : countries) {
+
                             if (enteredString.toLowerCase().equals(country.toLowerCase())) {
                                 countryIsValid = true;
                             }
@@ -188,9 +212,9 @@ public class CreateProfileActivity extends AppCompatActivity {
      * - gets every string the user entered within the textViews
      */
     public void submitProfileData(View view) {
-        String nameValue = name.getText().toString();
-        String countryValue = countryEdit.getText().toString();
-        String genderValue = genderSpinner.getSelectedItem().toString();
+        final String nameValue = name.getText().toString();
+        final String countryValue = countryEdit.getText().toString();
+        final String genderValue = genderSpinner.getSelectedItem().toString();
 
         // clear focuses of textViews to force TextWatchers to invoke afterTextChanged() methods
         name.clearFocus();
@@ -203,16 +227,59 @@ public class CreateProfileActivity extends AppCompatActivity {
          **/
 
         if (countryIsValid && nameIsValid) {
-            try {
-                createProfile(nameValue, countryValue, genderValue);
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
+
+            /**
+             * If no profile exists, create one
+             */
+            if (!ProfileManager.profileExists(getApplicationContext())) {
+
+                try {
+                    ProfileManager.createProfile(nameValue, countryValue, genderValue, getApplicationContext());
+                    initLogIn();
+                }
+                catch (IOException | JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+            else {
+
+                /**
+                 * If a profile exists, show a dialog alert that asks the user if they want to delete their old profile
+                 */
+                new AlertDialog.Builder(this)
+                        .setMessage(R.string.dialog_delete_profile)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteFile(constants.PROFILE_DATA_FILENAME);    // Delete Profile
+                                methods.showToast("Profile deleted.", getApplicationContext());
+
+                                try {
+                                    ProfileManager.createProfile(nameValue, countryValue, genderValue, getApplicationContext());
+                                }
+                                catch (IOException | JSONException e) {
+                                    e.printStackTrace();
+                                }
+
+                                initLogIn();
+
+                            }
+
+                        }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        //Do Nothing
+                    }
+                }).setCancelable(false)
+                        .create()
+                        .show();
             }
         }
         else {
 
             if (!countryIsValid) {
-                methods.showToast("Please make sure you enter a legitimate country!", getApplicationContext());
+                methods.showToast("Please make sure you chose a legitimate country!", getApplicationContext());
             }
 
             if (!nameIsValid) {
@@ -221,127 +288,20 @@ public class CreateProfileActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * This method creates one basic profile saved as a JSON on the internal storage of the device
-     *
-     * [
-     *   {
-     *     "name": name
-     *     "gender": gender
-     *     "country": country
-     *     "avatar": default.png
-     *     ...
-     *   }
-     * ]
-     *
-     * @param name - the name the user entered
-     * @param country - the country the user entered
-     * @param gender - the gender the user gave
-     */
-    private void createProfile(final String name, final String country, final String gender) throws IOException, JSONException {
-
-        if (!profileExists()){
-
-            FileOutputStream fos = openFileOutput(constants.PROFILE_DATA_FILENAME, Context.MODE_PRIVATE);
-
-            // Create JSON
-            JSONArray data = createProfileJSONObject(name, country, gender);
-
-            // Write onto device's storage
-            fos.write(data.toString().getBytes());
-            fos.close();
-
-            /** Test to make sure it worked
-             FileInputStream fis = openFileInput(constants.PROFILE_DATA_FILENAME);
-             BufferedInputStream bis = new BufferedInputStream(fis);
-             StringBuilder buffer = new StringBuilder();
-
-             while (bis.available() != 0) {
-             char c = (char) bis.read();
-             buffer.append(c);
-             }
-             fis.close();
-             bis.close();
-
-             methods.readProfileFromJSONBuffer(buffer);
-             */
-
-            methods.showToast("Profile created!", getBaseContext());
-
-            Intent logIn = new Intent(this, LogInActivity.class);
-            startActivity(logIn);
-        }
-        else {
-
-            /**
-             * If a profile exists, show a dialog alert that asks the user if they want to delete their old profile
-             */
-            new AlertDialog.Builder(this)
-                    .setMessage(R.string.dialog_delete_profile)
-                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    deleteFile(constants.PROFILE_DATA_FILENAME);    // Delete Profile
-                    methods.showToast("Profile deleted.", getApplicationContext());
-
-                    try {
-                        createProfile(name, country, gender);
-                    } catch (IOException | JSONException e) {
-                        e.printStackTrace();
-                    }
-
-                }
-
-            }).setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    //Do Nothing
-                }
-            }).setCancelable(false)
-                    .create()
-                    .show();
-        }
+    private void initLogIn() {
+        Intent logIn = new Intent(getApplicationContext(), LogInActivity.class);
+        startActivity(logIn);
     }
 
-    /**
-     * Creates the JSON Profile object used for the entire app.
-     * @param name - the name a user entered
-     * @param country - the country a user entered
-     * @param gender - the gender a user entered
-     * @return the JSONArray
-     * @throws JSONException
-     */
-    private JSONArray createProfileJSONObject(String name, String country, String gender) throws JSONException {
-        JSONArray data = new JSONArray();
-        JSONObject profile = new JSONObject();
-        profile.put(constants.PROFILE_NAME, name);
-        profile.put(constants.PROFILE_GENDER, gender);
-        profile.put(constants.PROFILE_COUNTRY, country);
-        profile.put(constants.PROFILE_AVATAR, "default_avatar");
-        profile.put(constants.STAT_LEVELS_DONE, 0);
-        profile.put(constants.STAT_VOCABULARIES_DONE, 0);
-        profile.put(constants.STAT_CORRECT_VOCABULARIES, 0);
-        profile.put(constants.STAT_WRONG_VOCABULARIES, 0);
-        profile.put(constants.STAT_USER_EXPERIENCE, 0);
-        profile.put(constants.STAT_USER_LEVEL, 1);
-        data.put(profile);
-
-        return data;
+    @Override
+    public void onResume() {
+        super.onResume();
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
     }
 
-    /**
-     * Checks if a profile exists by looking for its name within the file storage of the device
-     * @return - true if the profile data exists, false if otherwise
-     */
-    private boolean profileExists() {
-        String[] files = fileList();
-        for (String file : files) {
-            System.out.println(file);
-            if (file.equals(constants.PROFILE_DATA_FILENAME)) {
-                return true;
-            }
-        }
-        return false;
+    @Override
+    public void onPause() {
+        super.onPause();
+        BackgroundMusic.pause();
     }
 }

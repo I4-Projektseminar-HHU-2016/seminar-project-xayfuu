@@ -7,7 +7,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.bromi.Activities.UserProfileActivity">
+    tools:context=".activities.profile.UserProfileActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -217,7 +217,7 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true" />
 
-            <com.bromi.Custom.ExperienceBar
+            <com.bromi.custom.ExperienceBar
                 android:layout_height="fill_parent"
                 android:layout_width="fill_parent"
                 android:layout_below="@+id/user_experience"

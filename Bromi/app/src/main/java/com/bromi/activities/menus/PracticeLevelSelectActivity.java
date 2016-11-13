@@ -1,4 +1,4 @@
-package com.bromi.Activities;
+package com.bromi.activities.menus;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -10,7 +10,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bromi.activities.game.PracticeLevelActivity;
+import com.bromi.activities.profile.UserProfileActivity;
 import com.bromi.R;
+import com.bromi.audio.BackgroundMusic;
 import com.bromi.util.constants;
 import com.bromi.util.methods;
 
@@ -53,7 +56,10 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_level_select);
 
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+
         Bundle extras = getIntent().getExtras();    // receive Bundle from previous activity
+
         if (extras != null) {
             modeId = extras.getInt(constants.BUNDLE_MODE_ID);
             languageId = extras.getInt(constants.BUNDLE_LANGUAGE_ID);
@@ -78,7 +84,7 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
             userName.setText(profileData.get(constants.PROFILE_NAME));
         }
         else {
-            userName.setText("User 31");
+            userName.setText("ProfileManager 31");
         }
     }
 
@@ -144,6 +150,7 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         final Intent practiceLevel = new Intent(this, PracticeLevelActivity.class);
 
         b.startAnimation(fade);
+
         fade.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -179,48 +186,57 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
             case (R.id.level_1):
                 //Start level 1
                 levelTransition(b);
-                levelId = 0;
+                levelId = 1;
                 break;
+
             case (R.id.level_2):
                 //Start level 2
                 levelTransition(b);
-                levelId = 1;
+                levelId = 2;
                 break;
+
             case (R.id.level_3):
                 //Start level 3
                 levelTransition(b);
-                levelId = 2;
+                levelId = 3;
                 break;
+
             case (R.id.level_4):
                 //Start level 4
                 levelTransition(b);
-                levelId = 3;
+                levelId = 4;
                 break;
+
             case (R.id.level_5):
                 //Start level 5
                 levelTransition(b);
-                levelId = 4;
+                levelId = 5;
                 break;
+
             case (R.id.level_6):
                 //Start level 6
                 levelTransition(b);
-                levelId = 5;
+                levelId = 6;
                 break;
+
             case (R.id.level_7):
                 //Start level 7
                 levelTransition(b);
-                levelId = 6;
+                levelId = 7;
                 break;
+
             case (R.id.level_8):
                 //Start level 8
                 levelTransition(b);
-                levelId = 7;
+                levelId = 8;
                 break;
+
             case (R.id.level_exam):
                 //Start exam
                 levelTransition(b);
                 levelId = 42;
                 break;
+
             default:
                 levelId = -1;
         }
@@ -235,5 +251,17 @@ public class PracticeLevelSelectActivity extends AppCompatActivity {
         lvlSelect.putExtra(constants.BUNDLE_MODE_ID, modeId);
         lvlSelect.putExtra(constants.BUNDLE_PROFILE, profileData.toString());
         startActivity(lvlSelect);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BackgroundMusic.pause();
     }
 }

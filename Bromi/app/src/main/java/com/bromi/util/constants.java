@@ -52,6 +52,10 @@ public class constants {
     public static final int LANGUAGE_ID_KOREAN = 8;
     public static final int LANGUAGE_ID_RUSSIAN = 9;
 
+    // Level specific IDs
+    public static int TRANSLATION_LEVEL_LENGTH = 10;
+    public static int TRANSLATION_LEVEL_COUNT = 8;
+
     // Other IDs
     public static final int STRING_SIZE_LIMIT = 3;
     public static final int ANSWER_POSSIBILITY_SIZE = 4;

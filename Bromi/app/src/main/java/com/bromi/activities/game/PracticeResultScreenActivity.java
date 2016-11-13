@@ -1,4 +1,4 @@
-package com.bromi.Activities;
+package com.bromi.activities.game;
 
 import android.content.Context;
 import android.content.DialogInterface;
@@ -14,8 +14,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bromi.activities.menus.PracticeLevelSelectActivity;
 import com.bromi.R;
-import com.bromi.db.LanguageLevelData;
+import com.bromi.audio.BackgroundMusic;
+import com.bromi.db.LanguageData;
+import com.bromi.lib.LevelManager;
 import com.bromi.util.constants;
 import com.bromi.util.methods;
 
@@ -91,6 +94,8 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_result_screen);
+
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
 
         Bundle extras = getIntent().getExtras();
 
@@ -326,7 +331,8 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
     public void returnToLevelSelectScreen(View view) {
         try {
             saveProfileToJSON();
-        } catch (IOException | JSONException e) {
+        }
+        catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -344,7 +350,8 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
     public void redoLevel(View view) {
         try {
             saveProfileToJSON();
-        } catch (IOException | JSONException e) {
+        }
+        catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
@@ -366,14 +373,15 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
     public void nextLevel(View view) {
         try {
             saveProfileToJSON();
-        } catch (IOException | JSONException e) {
+        }
+        catch (IOException | JSONException e) {
             e.printStackTrace();
         }
 
         int next = levelId + 1;
         final Intent nextLevel = new Intent(this, PracticeLevelActivity.class);
 
-        if (next < LanguageLevelData.level_count) {
+        if (next < constants.TRANSLATION_LEVEL_COUNT) {
             nextLevel.putExtra(constants.BUNDLE_LEVEL_ID, next);
             nextLevel.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
             nextLevel.putExtra(constants.BUNDLE_MODE_ID, modeId);
@@ -439,6 +447,7 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
         Animation fade_in = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slow_fade_in);
         final Animation fast_shake = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fast_short_shake);
         level_results_text.startAnimation(fade_in);
+
         fade_in.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
@@ -514,5 +523,17 @@ public class PracticeResultScreenActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BackgroundMusic.pause();
     }
 }

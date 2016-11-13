@@ -1,4 +1,4 @@
-package com.bromi.Activities;
+package com.bromi.activities.menus;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.bromi.R;
+import com.bromi.audio.BackgroundMusic;
 import com.bromi.util.*;
 
 public class LanguageSelectActivity extends AppCompatActivity {
@@ -30,6 +31,8 @@ public class LanguageSelectActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_language_select);
 
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+
         Bundle b = getIntent().getExtras();     // recieve bundled data from previous activity
 
         if (b!=null) {
@@ -48,10 +51,9 @@ public class LanguageSelectActivity extends AppCompatActivity {
         Intent initNextActivity;
         if (modeId == constants.PRACTICE_MODE_ID) {
             initNextActivity = new Intent(this, PracticeLevelSelectActivity.class);
-            initNextActivity
-                    .putExtra(constants.BUNDLE_LANGUAGE_ID, languageId)
-                    .putExtra(constants.BUNDLE_MODE_ID, modeId)
-                    .putExtra(constants.BUNDLE_PROFILE, profileData);
+            initNextActivity.putExtra(constants.BUNDLE_LANGUAGE_ID, languageId);
+            initNextActivity.putExtra(constants.BUNDLE_MODE_ID, modeId);
+            initNextActivity.putExtra(constants.BUNDLE_PROFILE, profileData);
             startActivity(initNextActivity);
         }
         else if (modeId == constants.CHALLENGE_MODE_ID) {
@@ -76,5 +78,17 @@ public class LanguageSelectActivity extends AppCompatActivity {
         Intent mainMenu = new Intent(this, MainMenuActivity.class);
         mainMenu.putExtra(constants.BUNDLE_PROFILE, profileData);
         startActivity(mainMenu);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BackgroundMusic.pause();
     }
 }

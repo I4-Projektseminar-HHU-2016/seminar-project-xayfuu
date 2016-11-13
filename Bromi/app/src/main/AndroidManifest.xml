@@ -9,7 +9,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".Activities.MainActivity"
+            android:name=".activities.main.MainActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,35 +27,35 @@ App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Activities.LogInActivity"
+            android:name=".activities.LogInActivity"
             android:screenOrientation="portrait"
             android:noHistory="true" />
         <activity
-            android:name=".Activities.StartScreenActivity"
+            android:name=".activities.menus.StartScreenActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.CreateProfileInfoActivity"
+            android:name=".activities.profile.CreateProfileInfoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.CreateProfileActivity"
+            android:name=".activities.profile.CreateProfileActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.MainMenuActivity"
+            android:name=".activities.menus.MainMenuActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.LanguageSelectActivity"
+            android:name=".activities.menus.LanguageSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.PracticeLevelSelectActivity"
+            android:name=".activities.menus.PracticeLevelSelectActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.PracticeLevelActivity"
+            android:name=".activities.game.PracticeLevelActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Activities.PracticeResultScreenActivity"
+            android:name=".activities.game.PracticeResultScreenActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".Activities.UserProfileActivity"
+        <activity android:name=".activities.profile.UserProfileActivity"
             android:screenOrientation="portrait">
 
         </activity>

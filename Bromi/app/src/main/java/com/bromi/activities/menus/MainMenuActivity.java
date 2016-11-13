@@ -1,4 +1,4 @@
-package com.bromi.Activities;
+package com.bromi.activities.menus;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bromi.activities.profile.UserProfileActivity;
 import com.bromi.R;
+import com.bromi.audio.BackgroundMusic;
 import com.bromi.util.constants;
 import com.bromi.util.methods;
 
@@ -36,9 +38,12 @@ public class MainMenuActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main_menu);
 
         Bundle extras = getIntent().getExtras();    // receive bundle from previous activity
+
         if (extras != null) {
             profileData = methods.stringToHashMap(extras.getString(constants.BUNDLE_PROFILE));
         }
+
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
 
         userAvatar = (ImageView) findViewById(R.id.user_avatar_clickable);
         userName = (TextView) findViewById(R.id.user_name);
@@ -56,7 +61,7 @@ public class MainMenuActivity extends AppCompatActivity {
             userName.setText(profileData.get(constants.PROFILE_NAME));
         }
         else {
-            userName.setText("User 31");
+            userName.setText("ProfileManager 31");
         }
     }
 
@@ -117,4 +122,17 @@ public class MainMenuActivity extends AppCompatActivity {
         Intent startScreen = new Intent(this, StartScreenActivity.class);
         startActivity(startScreen);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BackgroundMusic.pause();
+    }
+
 }

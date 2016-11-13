@@ -1,4 +1,4 @@
-package com.bromi.Activities;
+package com.bromi.activities.game;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,8 +11,11 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bromi.activities.menus.PracticeLevelSelectActivity;
 import com.bromi.R;
+import com.bromi.audio.BackgroundMusic;
 import com.bromi.db.*;
+import com.bromi.lib.LevelManager;
 import com.bromi.util.*;
 
 import java.util.ArrayList;
@@ -104,12 +107,14 @@ public class PracticeLevelActivity extends AppCompatActivity {
     /**
      * DB object to enable interaction with the App's SQLite DB
      */
-    private LanguageLevelDbHelper langDb;
+    private LanguageDbAdapter langDb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_practice_level);
+
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
 
         Bundle extras = getIntent().getExtras();
 
@@ -126,13 +131,17 @@ public class PracticeLevelActivity extends AppCompatActivity {
             vocabularyUsed = extras.getStringArrayList("vocabularyUsed");
             currentLevel = methods.stringToHashMap(extras.getString("currentLevel"));
             vocabularyTotalCount = currentLevel.size();
+            langDb = new LanguageDbAdapter(this);
+            langDb.open();
 
         }
 
         // If level is completely new, instantiate normally
         else {
             vocabularyUsed = new ArrayList<>();
-            langDb = new LanguageLevelDbHelper(getApplicationContext());
+            langDb = new LanguageDbAdapter(this);
+            langDb.open();
+            //langDb = new LanguageDbHelper(getApplicationContext());
 
             loadLevelData();
         }
@@ -166,7 +175,8 @@ public class PracticeLevelActivity extends AppCompatActivity {
      */
     private void loadLevelData() {
         if (levelId != 42 && levelId != -1) {
-            currentLevel = langDb.readWordPairsAsMap(langDb.getLevel(levelId));
+            //currentLevel = langDb.readWordPairsAsMap(langDb.getLevel(levelId));
+            currentLevel = LevelManager.getTranslationLevelAsHashMap(levelId, LanguageDbAdapter.GERMAN_TRANSLATION, this);
             vocabularyTotalCount = currentLevel.size();
         }
 
@@ -308,7 +318,7 @@ public class PracticeLevelActivity extends AppCompatActivity {
         String toAdd;
 
         for (int i = 0; i < constants.ANSWER_POSSIBILITY_SIZE; i++) {
-            toAdd = LanguageLevelData.words[rand.nextInt(LanguageLevelData.words.length)];
+            toAdd = langDb.getWordAt(rand.nextInt(LanguageData.english_dictionary.length));
 
             for (int j = 0; j < order.size(); j++) {
 
@@ -579,5 +589,17 @@ public class PracticeLevelActivity extends AppCompatActivity {
                 }).setCancelable(false)
                     .create()
                     .show();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BackgroundMusic.pause();
     }
 }

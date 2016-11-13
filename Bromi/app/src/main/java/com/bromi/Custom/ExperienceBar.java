@@ -1,4 +1,4 @@
-package com.bromi.Custom;
+package com.bromi.custom;
 
 import android.content.Context;
 import android.graphics.Canvas;

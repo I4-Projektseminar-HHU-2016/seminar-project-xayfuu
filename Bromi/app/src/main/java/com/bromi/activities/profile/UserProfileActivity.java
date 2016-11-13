@@ -1,4 +1,4 @@
-package com.bromi.Activities;
+package com.bromi.activities.profile;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -7,7 +7,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bromi.Custom.ExperienceBar;
+import com.bromi.audio.BackgroundMusic;
+import com.bromi.custom.ExperienceBar;
 import com.bromi.R;
 import com.bromi.util.constants;
 import com.bromi.util.methods;
@@ -64,6 +65,8 @@ public class UserProfileActivity extends AppCompatActivity {
 
         Bundle extras = getIntent().getExtras();
 
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+
         if (extras != null) {
             profileData = methods.stringToHashMap(extras.getString(constants.BUNDLE_PROFILE));
             openedFrom = extras.getInt(constants.BUNDLE_OPENED_FROM);
@@ -105,7 +108,7 @@ public class UserProfileActivity extends AppCompatActivity {
             userName.setText(profileData.get(constants.PROFILE_NAME));
         }
         else {
-            userName.setText("User 31");
+            userName.setText("ProfileManager 31");
         }
     }
 
@@ -221,4 +224,17 @@ public class UserProfileActivity extends AppCompatActivity {
 
         startActivity(returnMenu);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        BackgroundMusic.start(this, R.raw.walterwarm_summer_love, false);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        BackgroundMusic.pause();
+    }
+
 }
